@@ -28,11 +28,11 @@ Ext.define('bo.sim.TaskProducer', {
   },
   onProcessorProcess: function (processor, time) {
     var tasks = this.remainingTasks;
+    var queue = processor.getQueue();
     if (tasks.length) {
-      var taskTime = tasks[0].getStartTime();
-      while (taskTime == time) {
+      for (var currentTask = tasks[0]; currentTask.getStartTime() == time; tasks.shift()) {
         //dodawaj taski o ile należą do tego punktu w czasie
-        
+        queue.addTask(currentTask);
       }
     }
   }

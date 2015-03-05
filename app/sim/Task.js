@@ -12,7 +12,11 @@ Ext.define('bo.sim.Task', {
     var parts = [];
     for (var i = 0; i < size; i += ps) {
       parts.push(Ext.create('bo.sim.TaskPart', {
-        task: this
+        task: this,
+        listeners: {
+          scope: this,
+          finish: this.onTaskPartFinish
+        }
       }));
     }
     this.setParts(parts);
@@ -20,6 +24,7 @@ Ext.define('bo.sim.Task', {
     this.unconsumedParts = Ext.Array.clone(parts);
     // części które czekają na obsługę
     this.consumedParts = [];
+    this.finishedParts = [];
   },
   /**
    * pobieramy część lub całość zadania
@@ -32,9 +37,19 @@ Ext.define('bo.sim.Task', {
     }
     return part;
   },
-  getRemainingParts: function () {
+  casConsumePart: function () {
     return this.unconsumedParts.length;
   },
-
+  onTaskPartFinish: function (taskPart) {
+    Ext.Array.remove(this.consumedParts, taskPart);
+    this.finishedParts.put(taskPart);
+    if (this.isFinished()) {
+      //nie ma ani niezaczętych ani zaczętych zadań, ogłoś koniec
+      this.fireEvent('finish', this);
+    }
+  },
+  isFinished: function () {
+    return this.unconsumedParts.length == 0 && this.consumedParts.length == 0
+  }
 
 });

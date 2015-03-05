@@ -1,7 +1,7 @@
 Ext.define('bo.sim.Task', {
   config: {
     size: 1,
-    startTime: 0,
+    enqueueTime: 0,
     partSize: Infinity,
     parts: null
   },
@@ -13,6 +13,7 @@ Ext.define('bo.sim.Task', {
     for (var i = 0; i < size; i += ps) {
       parts.push(Ext.create('bo.sim.TaskPart', {
         task: this,
+        size: Math.min(size, size - i),
         listeners: {
           scope: this,
           finish: this.onTaskPartFinish
@@ -30,14 +31,14 @@ Ext.define('bo.sim.Task', {
    * pobieramy część lub całość zadania
    * @param delta
    */
-  consume: function () {
+  consumePart: function () {
     var part = this.unconsumedParts.pop();
     if (part) {
       this.consumedParts.push(part);
     }
     return part;
   },
-  casConsumePart: function () {
+  canConsumeTaskPart: function () {
     return this.unconsumedParts.length;
   },
   onTaskPartFinish: function (taskPart) {

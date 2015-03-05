@@ -2,7 +2,9 @@ Ext.define('bo.sim.TaskPart', {
   extend: 'Ext.util.Observable',
   config: {
     task: null,
-    size: 0
+    size: 0,
+    startTime: null,
+    finishTime: null
   },
   constructor: function (config) {
     this.initConfig(config);

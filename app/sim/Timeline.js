@@ -8,7 +8,8 @@ Ext.define('bo.sim.Timeline', {
    * @param time
    */
   registerTime: function (time) {
-
+    var a = this.times;
+    a.splice(Ext.Array.binarySearch(a, time, Ext.Array.numericSortFn), 0, time);
   },
   /**
    * @return time

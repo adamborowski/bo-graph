@@ -4,7 +4,8 @@ Ext.define('bo.sim.Processor', {
     timeline: null,
     cores: null,
     queue: null,
-    performance: 0 //ile ms zajmuje jeden cykl (0 - niezauważalnie, 1000 - procesory będą pracowały nad jednym kwantem jedną sekundę)
+    coreDefaults: {},
+    simSpeed: 0 //ile ms zajmuje jeden cykl (0 - niezauważalnie, 1000 - procesory będą pracowały nad jednym kwantem jedną sekundę)
   },
   applyQueue: function (queue) {
     queue = queue || {};
@@ -24,6 +25,7 @@ Ext.define('bo.sim.Processor', {
         core.setProcessor(this);
       } else {
         core.processor = this;
+        Ext.apply(core, this.getCoreDefaults());
         core = Ext.create('bo.sim.Core', core);
       }
       return core;
@@ -56,7 +58,7 @@ Ext.define('bo.sim.Processor', {
     }
     this.fireEvent('afterprocess', this, time);
     if (tl.hasNextTime()) {
-      Ext.defer(this.process, this.getPerformance(), this);
+      Ext.defer(this.process, this.getSimSpeed(), this);
     }
     else {
       this.fireEvent('finish', this, time);

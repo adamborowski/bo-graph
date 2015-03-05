@@ -4,18 +4,20 @@
  * details.
  */
 Ext.define('bo.Application', {
-    extend: 'Ext.app.Application',
-    requires: [
-        'bo.*',
-        'Ext.chart.*'
-    ],
-    name: 'bo',
+  extend: 'Ext.app.Application',
+  requires: [
+    'bo.*',
+    'Ext.chart.*'
+  ],
+  name: 'bo',
 
-    stores: [
-        // TODO: add global / shared stores here
-    ],
-    
-    launch: function () {
-        // TODO - Launch the application
+  stores: [
+    // TODO: add global / shared stores here
+  ],
+
+  launch: function () {
+    Array.prototype.last = function () {
+      return this[this.length - 1];
     }
+  }
 });

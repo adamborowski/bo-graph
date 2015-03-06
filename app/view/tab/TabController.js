@@ -64,7 +64,8 @@ Ext.define('bo.view.tab.TabController', {
       processor: processor,
       tasks: Ext.Array.map(tasks.getRange(), function (rec) {
         return {
-          enqueueTime: rec.get('time')
+          enqueueTime: rec.get('time'),
+          size: rec.get('size')
         }
       })
     });

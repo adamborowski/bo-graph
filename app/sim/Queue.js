@@ -18,6 +18,16 @@ Ext.define('bo.sim.Queue', {
   getLength: function () {
     return this.unconsumedTasks.length + this.fullConsumedTasks.length;
   },
+  getUnfinished: function () {
+    var s = 0, i;
+    for (i = 0; i < this.unconsumedTasks.length; i++) {
+      s += this.unconsumedTasks[i].getUnfinished();
+    }
+    for (i = 0; i < this.fullConsumedTasks.length; i++) {
+      s += this.fullConsumedTasks[i].getUnfinished();
+    }
+    return s;
+  },
   canConsumeTaskPart: function () {
     return this.unconsumedTasks.length > 0;
   },

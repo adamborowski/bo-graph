@@ -17,10 +17,11 @@ Ext.define('bo.sim.Task', {
     var size = this.getSize();
     var parts = [];
     for (var i = 0; i < size; i += ps) {
+      var partSize = Math.min(ps, size - i);
       parts.push(Ext.create('bo.sim.TaskPart', {
         task: this,
         order: i,
-        size: Math.min(size, size - i),
+        size: partSize,
         listeners: {
           scope: this,
           finish: this.onTaskPartFinish
@@ -61,6 +62,13 @@ Ext.define('bo.sim.Task', {
   },
   isFinished: function () {
     return this.unconsumedParts.length == 0 && this.consumedParts.length == 0
+  },
+  getUnfinished: function () {
+    var s = 0, i;
+    for (i = 0; i < this.unconsumedParts.length; i++) {
+      s += this.unconsumedParts[i].getSize();
+    }
+    return s;
   }
 
 });

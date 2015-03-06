@@ -8,7 +8,7 @@ Ext.define('bo.sim.Task', {
     order: 0
   },
   toString: function () {
-    return Ext.String.format("T{0}({1}s)", this.getOrder(), this.getSize());
+    return Ext.String.format("T{0}({1}j)", this.getOrder(), this.getSize());
   },
   constructor: function (config) {
     this.initConfig(config);
@@ -64,9 +64,18 @@ Ext.define('bo.sim.Task', {
     return this.unconsumedParts.length == 0 && this.consumedParts.length == 0
   },
   getUnfinished: function () {
+    return this.getSize() - this.getWorkDone();
+  },
+  getWorkDone: function () {
     var s = 0, i;
     for (i = 0; i < this.unconsumedParts.length; i++) {
-      s += this.unconsumedParts[i].getSize();
+      s += this.unconsumedParts[i].getWorkDone();
+    }
+    for (i = 0; i < this.consumedParts.length; i++) {
+      s += this.consumedParts[i].getWorkDone();
+    }
+    for (i = 0; i < this.finishedParts.length; i++) {
+      s += this.finishedParts[i].getWorkDone();
     }
     return s;
   }

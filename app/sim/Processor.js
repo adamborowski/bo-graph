@@ -75,9 +75,9 @@ Ext.define('bo.sim.Processor', {
       cores[i].processPhase1(time);//tutaj kończone są zadania
     }
 
-
+    this.getEventBus().registerEvent(this, 'unfinished ' + this.getQueue().getUnfinished());
     this.fireEvent('process', this, time);//tutaj obiekty zewnętrzne mogą dodać np zadanie do kolejki
-    this.getEventBus().registerEvent(this, 'queue size ' + this.getQueue().getLength());
+    this.getEventBus().registerEvent(this, 'unfinished ' + this.getQueue().getUnfinished());
 
     for (i = 0; i < nCores; i++) {
       cores[i].processPhase2(time);//tutaj pobierane są zadania

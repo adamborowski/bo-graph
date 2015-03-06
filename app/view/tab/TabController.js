@@ -100,6 +100,7 @@ Ext.define('bo.view.tab.TabController', {
       current += event.started;
       event.current = current;
     }
+
     //todo trzeba zrobić symulację - każdy rdzeń pobiera zadania, uwzględnić rozmiar bufora, zdolność przetwarzania procesrów
     //trzeba wykorzystać event i event.time do upływu czasu symulacji
   }

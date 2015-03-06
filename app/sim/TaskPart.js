@@ -5,6 +5,7 @@ Ext.define('bo.sim.TaskPart', {
     size: 0,
     startTime: null,
     finishTime: null,
+    workDone:0,
     order: 0
   },
   constructor: function (config) {

@@ -15,10 +15,13 @@ Ext.define('bo.sim.Core', {
   processPhase1: function (time) {
     var part = this.currentPart;
     if (part) {
+      var partWorkDone = this.calculateWork(time - part.getStartTime());
+      part.setWorkDone(partWorkDone);
       if (part.getFinishTime() <= time) {
         part.finish();
         this.currentPart = null;
       }
+      console.log("task unfinished ", part.getTask().getUnfinished(), part.getTask().toString(), 'on time',  time);
     }
 
   },
@@ -27,6 +30,9 @@ Ext.define('bo.sim.Core', {
   },
   isBusy: function () {
     return this.currentPart != null;
+  },
+  calculateWork: function (duration) {
+    return duration * this.getPerformance();
   },
   /**
    * tutaj trzeba pobrać z kolejki kwanty do obróbki
@@ -38,7 +44,7 @@ Ext.define('bo.sim.Core', {
       var q = this.getProcessor().getQueue();
       if (q.canConsumeTaskPart()) {
         var p = this.currentPart = q.consumeTaskPart(this);
-        var duration = Math.ceil(p.getSize() / this.getPerformance());
+        var duration = (p.getSize() / this.getPerformance());
         var finishTime = time + duration;
         p.setStartTime(time);
         p.setFinishTime(finishTime);

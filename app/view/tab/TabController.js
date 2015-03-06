@@ -42,11 +42,35 @@ Ext.define('bo.view.tab.TabController', {
       scope: this,
       update: this.updateChart,
       datachanged: this.updateChart
-    })
+    });
     this.updateChart();
   },
   updateChart: function () {
     var tasks = this.getViewModel().get('tasks');
+
+    var processor = Ext.create('bo.sim.Processor', {
+      queue: {
+        //capacity:4
+      },
+      coreDefaults: {
+        performance: 1
+      },
+      cores: [
+        {},
+        {}
+      ]
+    });
+    var producer = Ext.create('bo.sim.TaskProducer', {
+      processor: processor,
+      tasks: Ext.Array.map(tasks.getRange(), function (rec) {
+        return {
+          enqueueTime: rec.get('time')
+        }
+      })
+    });
+    processor.start();
+
+
     var events = {};
 
     tasks.each(function (model) {
@@ -75,7 +99,6 @@ Ext.define('bo.view.tab.TabController', {
       current += event.started;
       event.current = current;
     }
-    debugger
     //todo trzeba zrobić symulację - każdy rdzeń pobiera zadania, uwzględnić rozmiar bufora, zdolność przetwarzania procesrów
     //trzeba wykorzystać event i event.time do upływu czasu symulacji
   }

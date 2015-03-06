@@ -15,7 +15,10 @@ Ext.define('bo.sim.Timeline', {
    * @return time
    */
   nextTime: function () {
-    return this.times.shift();
+    return this.currentTime = this.times.shift();
+  },
+  getCurrentTime: function () {
+    return this.currentTime;
   },
   hasNextTime: function () {
     return this.times.length;

@@ -18,7 +18,7 @@ Ext.define('bo.view.main.MainController', {
     var newTab = tabs.add({
       xtype: 'app-tab',
       controller: {
-        plain: '0.5 1\n1 2\n4 5\n4.5 1'
+        plain: '0.5 3\n2 2\n5 2\n6.5 3'
       }
     });
     tabs.setActiveItem(newTab);

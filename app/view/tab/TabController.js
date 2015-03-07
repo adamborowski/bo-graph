@@ -46,6 +46,7 @@ Ext.define('bo.view.tab.TabController', {
       }
       tasks.setData(data);
     }
+    this.lookupReference('corevis').getController().setChart(this.lookupReference('chart'));
 
   },
   colorTable: [
@@ -59,7 +60,8 @@ Ext.define('bo.view.tab.TabController', {
   assignColor: function (store, records) {
     for (var i = 0; i < records.length; i++) {
       var rec = records[i];
-      rec.set('color', this.createColor());
+      if (Ext.isEmpty(rec.get('color')))
+        rec.set('color', this.createColor());
     }
   },
   updateChart: function () {
@@ -82,18 +84,26 @@ Ext.define('bo.view.tab.TabController', {
     });
     var producer = Ext.create('bo.sim.TaskProducer', {
       processor: processor,
+      taskDefaults: {
+        partSize: 2,
+      },
       tasks: Ext.Array.map(tasks.getRange(), function (rec) {
         return {
           enqueueTime: rec.get('time'),
-          size: rec.get('size')
+          size: rec.get('size'),
+          color: rec.get('color')
         }
       })
     });
 
-    processor.start();
 
+    var coreVisController = this.lookupReference('corevis').getController();
+    coreVisController.setProcessor(processor);
+    coreVisController.setTaskStore(tasks);
+    processor.start();
     ///
     this.getViewModel().get('unfinished').setData(processor.getOutput().getTimelineForProperty('unfinished'));
     this.getViewModel().get('numTasks').setData(processor.getOutput().getTimelineForProperty('numTasks'));
+
   }
 });

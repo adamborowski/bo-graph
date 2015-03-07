@@ -99,6 +99,7 @@ Ext.define('bo.view.tab.Tab', {
     },
     {
       xtype: 'panel',
+      padding:1,
       region: 'center',
       layout: {
         type: 'vbox',
@@ -107,7 +108,13 @@ Ext.define('bo.view.tab.Tab', {
       },
       items: [
         {
+          xtype: 'corevis',
+          reference: 'corevis',
+          flex: 0.7
+        },
+        {
           xtype: 'cartesian',
+          animation: false,
           reference: 'chart',
           bind: {
             store: '{unfinished}'
@@ -157,6 +164,7 @@ Ext.define('bo.view.tab.Tab', {
           }]
         }, {
           xtype: 'cartesian',
+          animation: false,
           reference: 'chart_n_t',
           bind: {
             store: '{numTasks}'

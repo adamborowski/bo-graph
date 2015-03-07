@@ -2,6 +2,7 @@ Ext.define('bo.sim.Task', {
   extend: 'Ext.util.Observable',
   config: {
     size: 1,
+    color: null,
     enqueueTime: 0,
     partSize: Infinity,
     parts: null,
@@ -20,7 +21,7 @@ Ext.define('bo.sim.Task', {
       var partSize = Math.min(ps, size - i);
       parts.push(Ext.create('bo.sim.TaskPart', {
         task: this,
-        order: i,
+        order: parts.length,
         size: partSize,
         listeners: {
           scope: this,
@@ -42,7 +43,7 @@ Ext.define('bo.sim.Task', {
   consumePart: function (core) {
     this.core = core;
     core.getProcessor().getEventBus().registerEvent(this, 'task started')
-    var part = this.unconsumedParts.pop();
+    var part = this.unconsumedParts.shift();
     if (part) {
       this.consumedParts.push(part);
     }

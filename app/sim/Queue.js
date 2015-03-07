@@ -38,10 +38,15 @@ Ext.define('bo.sim.Queue', {
    */
   consumeTaskPart: function (core) {
     var task = this.unconsumedTasks[0];
+
     var part = task.consumePart(core);
     if (!task.canConsumeTaskPart()) {
       this.unconsumedTasks.shift();
       this.fullConsumedTasks.push(task);
+    }
+    else {
+      //task nie został zabrany w całośc - przekaruzeluj na koniec
+      this.unconsumedTasks.push(this.unconsumedTasks.shift());
     }
     return part;
   },

@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1383716a-f2de-4434-9450-f293e87064df" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/corevis/CoreVis.js" afterPath="$PROJECT_DIR$/app/view/corevis/CoreVis.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/corevis/CoreVisController.js" afterPath="$PROJECT_DIR$/app/view/corevis/CoreVisController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/sim/Queue.js" afterPath="$PROJECT_DIR$/app/sim/Queue.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/tab/Tab.js" afterPath="$PROJECT_DIR$/app/view/tab/Tab.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/tab/TabController.js" afterPath="$PROJECT_DIR$/app/view/tab/TabController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/sim/Task.js" afterPath="$PROJECT_DIR$/app/sim/Task.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.json" afterPath="$PROJECT_DIR$/app.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bootstrap.json" afterPath="$PROJECT_DIR$/bootstrap.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="bo_graph.iws" />
@@ -88,34 +81,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CoreVisController.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CoreVisController.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/view/corevis/CoreVisController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1549" max-vertical-offset="2520">
-              <caret line="106" column="50" selection-start-line="106" selection-start-column="50" selection-end-line="106" selection-end-column="50" />
+            <state vertical-scroll-proportion="0.7644493" vertical-offset="1729" max-vertical-offset="2700">
+              <caret line="135" column="31" selection-start-line="135" selection-start-column="31" selection-end-line="135" selection-end-column="31" />
               <folding>
                 <element signature="e#0#333#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Queue.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/sim/Queue.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="78" max-vertical-offset="1098">
-              <caret line="48" column="60" selection-start-line="48" selection-start-column="60" selection-end-line="48" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Task.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/sim/Task.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.13548388" vertical-offset="540" max-vertical-offset="1548">
-              <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -165,8 +138,8 @@
         <option value="$PROJECT_DIR$/app/view/tab/Tab.js" />
         <option value="$PROJECT_DIR$/app/sim/Queue.js" />
         <option value="$PROJECT_DIR$/app/view/tab/TabController.js" />
-        <option value="$PROJECT_DIR$/app/view/corevis/CoreVisController.js" />
         <option value="$PROJECT_DIR$/app/sim/Task.js" />
+        <option value="$PROJECT_DIR$/app/view/corevis/CoreVisController.js" />
       </list>
     </option>
   </component>
@@ -803,28 +776,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/sim/Queue.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="78" max-vertical-offset="1098">
-          <caret line="48" column="60" selection-start-line="48" selection-start-column="60" selection-end-line="48" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/view/tab/TabController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="736" max-vertical-offset="2070">
           <caret line="78" column="8" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#333#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/view/corevis/CoreVisController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1549" max-vertical-offset="2520">
-          <caret line="106" column="50" selection-start-line="106" selection-start-column="50" selection-end-line="106" selection-end-column="50" />
           <folding>
             <element signature="e#0#333#0" expanded="true" />
           </folding>
@@ -851,9 +806,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/sim/Task.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.13548388" vertical-offset="540" max-vertical-offset="1548">
+        <state vertical-scroll-proportion="0.019354839" vertical-offset="396" max-vertical-offset="1548">
           <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/sim/Queue.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7096774" vertical-offset="168" max-vertical-offset="1098">
+          <caret line="48" column="60" selection-start-line="48" selection-start-column="60" selection-end-line="48" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/corevis/CoreVisController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7644493" vertical-offset="1729" max-vertical-offset="2700">
+          <caret line="135" column="31" selection-start-line="135" selection-start-column="31" selection-end-line="135" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#333#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

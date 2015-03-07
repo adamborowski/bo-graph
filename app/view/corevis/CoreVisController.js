@@ -100,6 +100,14 @@ Ext.define('bo.view.corevis.CoreVisController', {
     }
 
     var drColor = Ext.draw.Color.fromString(color);
+    var textOpacity = 0.4;
+    var compo = surface.add({
+      type: 'composite',
+      x: taskX + this.getHeaderWidth(),
+      y: r(this.getRowHeight() * core.getOrder())
+
+    });
+
     var rect = surface.add({
       type: 'rect',
       x: taskX + this.getHeaderWidth(),
@@ -113,7 +121,8 @@ Ext.define('bo.view.corevis.CoreVisController', {
     });
     var text = surface.add({
       type: 'text',
-      color: drColor.createLighter(0.4).toString(),
+      fillStyle: 'white',
+      fillOpacity: textOpacity,
       text: 'Task ' + (part.getTask().getOrder() + 1) + ' (' + size(part.getTask().getSize()) + ')',
       x: r(rect.x + 0.5 * rect.width),
       y: r(rect.y + 0.5 * rect.height),
@@ -123,7 +132,8 @@ Ext.define('bo.view.corevis.CoreVisController', {
     });
     var partText = surface.add({
       type: 'text',
-      color: drColor.createLighter(0.4).toString(),
+      fillStyle: 'white',
+      fillOpacity: textOpacity,
       text: Ext.String.format('#{0} ({1})', part.getOrder() + 1, size(part.getSize())),// '# ' + part.getOrder(),
       x: r(rect.x + 0.5 * rect.width),
       y: r(rect.y + 0.5 * rect.height) + 14,

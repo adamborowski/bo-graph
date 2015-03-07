@@ -45,7 +45,7 @@ Ext.define('bo.view.corevis.CoreVisController', {
     this.surface = this.draw.getSurface('main');
     this.processor = this.getProcessor();
     //
-    this.setRowHeight(this.draw.getHeight() / this.processor.getCores().length);
+    this.setRowHeight((this.draw.getHeight() - 1) / this.processor.getCores().length);
     this.setHeaderWidth(chart.getInnerRect()[0]);
     //
     this.surface.removeAll();

@@ -18,6 +18,7 @@ Ext.define('bo.view.corevis.CoreVisController', {
   },
   init: function () {
     this.needsRedraw = true;
+    this.getView().on('resize', this.onProcessorFinish, this);
   },
   updateProcessor: function (p) {
     p.on('finish', this.onProcessorFinish, this);
@@ -38,6 +39,9 @@ Ext.define('bo.view.corevis.CoreVisController', {
   },
   doRedraw: function () {
     var chart = this.getChart(), processor = this.getProcessor();
+    if (processor == null) {
+      return;//co prawda wykres się wyrenderował, ale jest pusty bo żaden procesor nie został stworzony
+    }
     var timeAxis = chart.getAxis(1);
     this.matrix = timeAxis.getSprites()[0].attr.matrix
     //this.matrix = timeAxis.getSurface().matrix

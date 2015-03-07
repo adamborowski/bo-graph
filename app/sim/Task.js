@@ -8,6 +8,10 @@ Ext.define('bo.sim.Task', {
     parts: null,
     order: 0
   },
+  applyPartSize: function (a) {
+    if (a == 0)return Infinity;
+    return a;
+  },
   toString: function () {
     return Ext.String.format("T{0}({1}j)", this.getOrder(), this.getSize());
   },

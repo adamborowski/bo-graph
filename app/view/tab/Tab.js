@@ -1,3 +1,4 @@
+var USE_CHART_ANIMATION = false;
 /**
  * This class is the main view for the application. It is specified in app.js as the
  * "autoCreateViewport" property. That setting automatically applies the "viewport"
@@ -19,32 +20,21 @@ Ext.define('bo.view.tab.Tab', {
   },
 
   layout: {
-    type: 'border',
+    type: 'border'
   },
   items: [
     {
-      xtype: 'grid',
       region: 'west',
+      layout: {
+        type: 'vbox',
+        align: 'stretch',
+        pack: 'stretch'
+      },
+      width: 200,
       title: 'zgłoszenia',
       collapsible: true,
       collapsed: false,
       collapseFirst: false,
-      titleCollapse: true,
-      width: 200,
-      reference: 'grid',
-      selModel: {
-        mode: 'MULTI'
-      },
-      viewConfig: {
-        markDirty: false
-      },
-      bind: {
-        store: '{tasks}'
-      },
-      plugins: {
-        ptype: 'cellediting',
-        clicksToEdit: 1
-      },
       tools: [
         {
           tooltip: 'dodaj wiersz',
@@ -57,49 +47,79 @@ Ext.define('bo.view.tab.Tab', {
           handler: 'removeRow'
         }
       ],
-      columns: {
-        defaults: {
-          sortable: false,
-          menuDisabled: true
-        },
-        items: [
-          {
-            text: 'n',
-            xtype: 'rownumberer'
+      items: [
+        {
+          xtype: 'grid',
+          flex: 1,
+
+          reference: 'grid',
+          selModel: {
+            mode: 'MULTI'
           },
-          {
-            dataIndex: 'color',
-            width: 24,
-            renderer: function (color, meta) {
-              meta.tdStyle = "background: " + color;
-            }
+          viewConfig: {
+            markDirty: false
           },
-          {
-            text: 't+',
-            xtype: 'numbercolumn',
-            dataIndex: 'time',
-            flex: 1,
-            editor: {
-              xtype: 'numberfield',
-              step: 0.1
-            }
+          bind: {
+            store: '{tasks}'
           },
-          {
-            text: 'b',
-            dataIndex: 'size',
-            xtype: 'numbercolumn',
-            flex: 1,
-            editor: {
-              xtype: 'numberfield',
-              step: 0.1
-            }
+          plugins: {
+            ptype: 'cellediting',
+            clicksToEdit: 1
+          },
+
+          columns: {
+            defaults: {
+              sortable: false,
+              menuDisabled: true
+            },
+            items: [
+              {
+                text: 'n',
+                xtype: 'rownumberer'
+              },
+              {
+                dataIndex: 'color',
+                width: 24,
+                renderer: function (color, meta) {
+                  meta.tdStyle = "background: " + color;
+                }
+              },
+              {
+                text: 't<sup>+</sup><sub>n</sub>',
+                xtype: 'numbercolumn',
+                dataIndex: 'time',
+                flex: 1,
+                editor: {
+                  xtype: 'numberfield',
+                  step: 0.1
+                }
+              },
+              {
+                text: 'b<sub>n</sub>',
+                dataIndex: 'size',
+                xtype: 'numbercolumn',
+                flex: 1,
+                editor: {
+                  xtype: 'numberfield',
+                  step: 0.1
+                }
+              }
+            ]
           }
-        ]
-      }
+        },
+        {
+          xtype: 'corelist',
+          reference: 'coreList',
+          dock: 'bottom',
+          minHeight: 70,
+          height: 250,
+          animCollapse: false
+        }
+      ]
     },
     {
       xtype: 'panel',
-      padding:1,
+      padding: 1,
       region: 'center',
       layout: {
         type: 'vbox',
@@ -114,13 +134,9 @@ Ext.define('bo.view.tab.Tab', {
         },
         {
           xtype: 'cartesian',
-          animation: false,
+          animation: USE_CHART_ANIMATION,
           reference: 'chart',
-          bind: {
-            store: '{unfinished}'
-          },
           flex: 1,
-          sprites: [],
           axes: [{
             type: 'numeric',
             fields: 'unfinished',
@@ -162,15 +178,12 @@ Ext.define('bo.view.tab.Tab', {
               }
             }
           }]
-        }, {
+        },
+        {
           xtype: 'cartesian',
-          animation: false,
+          animation: USE_CHART_ANIMATION,
           reference: 'chart_n_t',
-          bind: {
-            store: '{numTasks}'
-          },
           flex: 0.5,
-          sprites: [],
           axes: [{
             type: 'numeric',
             fields: 'numTasks',
@@ -215,6 +228,3 @@ Ext.define('bo.view.tab.Tab', {
   ]
 
 });
-
-
-//TODO zrobić wizualizację: w pionie numer zadania (partu) a w pioziomie czas - bloczki (przed narodzeniem, oczekiwanie, przetwarzane, gotowe)

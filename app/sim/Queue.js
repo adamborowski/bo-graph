@@ -4,6 +4,11 @@ Ext.define('bo.sim.Queue', {
     capacity: Infinity,
     processor: null
   },
+
+  applyCapacity: function (a) {
+    if (a == 0)return Infinity;
+    return a;
+  },
   constructor: function (config) {
     this.initConfig(config);
     this.callParent(arguments);
@@ -11,7 +16,7 @@ Ext.define('bo.sim.Queue', {
     this.fullConsumedTasks = [];//zadania które nie mają już wolnego partu
   },
   addTask: function (task) {
-    if (this.getLength() + 1 == this.getCapacity()) return false;
+    if (this.getLength() == this.getCapacity()) return false;
     this.unconsumedTasks.push(task);
     this.getProcessor().getEventBus().registerEvent(this, Ext.String.format('task {0} added', task.toString()));
     task.on('finish', this.onTaskFinish, this);

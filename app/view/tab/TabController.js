@@ -15,8 +15,11 @@ Ext.define('bo.view.tab.TabController', {
     cnt: 0
   },
   addRow: function () {
+    var grid = this.lookupReference('grid');
     var tasks = this.getViewModel().get('tasks');
-    var time = tasks.last() ? tasks.last().get('time') : 0;
+    var selected = grid.getSelection()[0];
+    if (selected == null)selected = tasks.last();
+    var time = selected ? selected.get('time') : 0;
     tasks.add({time: time, size: 1});
   },
   removeRow: function () {
@@ -26,6 +29,9 @@ Ext.define('bo.view.tab.TabController', {
     tasks.remove(selected);
   },
   init: function () {
+    this.lookupReference('chart').setStore(this.getViewModel().get('unfinished'));
+    this.lookupReference('chart_n_t').setStore(this.getViewModel().get('numTasks'));
+    this.lookupReference('coreList').getController().on('coreupdate', this.updateChart, this);
     var tasks = this.getViewModel().get('tasks');
     tasks.on({
       scope: this,
@@ -65,11 +71,15 @@ Ext.define('bo.view.tab.TabController', {
     }
   },
   updateChart: function () {
+    console.info('chart update');
     var tasks = this.getViewModel().get('tasks');
+
+
+    var coreList = this.lookupReference('coreList').getController();
 
     var processor = Ext.create('bo.sim.Processor', {
       queue: {
-        //capacity:4
+        capacity: coreList.getQueueSize()
       },
       eventBus: {
         logEvents: false
@@ -77,15 +87,12 @@ Ext.define('bo.view.tab.TabController', {
       coreDefaults: {
         performance: 1
       },
-      cores: [
-        {},
-        {}
-      ]
+      cores: coreList.getCores()
     });
     var producer = Ext.create('bo.sim.TaskProducer', {
       processor: processor,
       taskDefaults: {
-        partSize: 2,
+        partSize: coreList.getDelta(),
       },
       tasks: Ext.Array.map(tasks.getRange(), function (rec) {
         return {
@@ -95,7 +102,6 @@ Ext.define('bo.view.tab.TabController', {
         }
       })
     });
-
 
     var coreVisController = this.lookupReference('corevis').getController();
     coreVisController.setProcessor(processor);

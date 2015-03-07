@@ -11,17 +11,23 @@ Ext.define('bo.sim.PropertyTimeline', {
   registerTime: function (time, props) {
     var a = this.times;
     var timeIndex = Ext.Array.binarySearch(a, time, function (_a, _b) {
-      return _a- _b.time
+      return _a - _b.time
     });
     var propertyObject = this.times[timeIndex];
     if (propertyObject && propertyObject.time == time) {
       Ext.apply(propertyObject, props);
+      return propertyObject;
     }
     else {
       props.time = time;
       a.splice(timeIndex, 0, props);
+      return props;
     }
-
+  },
+  registerTimeForArrayInsert: function (time, property, newItem) {
+    var timeObject = this.registerTime(time, {});
+    if (timeObject[property] == null)timeObject[property] = [];
+    timeObject[property].push(newItem);
   },
   getTimelineForProperty: function (prop) {
     var a = this.times;

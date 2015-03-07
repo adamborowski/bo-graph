@@ -19,9 +19,12 @@ Ext.define('bo.sim.Core', {
       part.setWorkDone(partWorkDone);
       if (part.getFinishTime() <= time) {
         part.finish();
+        this.getProcessor().getOutput().registerTimeForArrayInsert(time, 'finishedTaskParts', {
+          core: this,
+          taskPart: part
+        });
         this.currentPart = null;
       }
-      console.log("task unfinished ", part.getTask().getUnfinished(), part.getTask().toString(), 'on time',  time);
     }
 
   },
@@ -50,6 +53,10 @@ Ext.define('bo.sim.Core', {
         p.setFinishTime(finishTime);
         this.getProcessor().getTimeline().registerTime(finishTime);
         p.start(this, time);
+        this.getProcessor().getOutput().registerTimeForArrayInsert(time, 'startedTaskParts', {
+          core: this,
+          taskPart: p
+        });
       }
     }
   }

@@ -7,6 +7,9 @@ Ext.define('bo.model.Task', {
     }, {
       name: 'size',
       type: 'number'
+    }, {
+      name: 'color',
+      type: 'string'
     }
   ]
 });

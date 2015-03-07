@@ -20,28 +20,29 @@ Ext.define('bo.view.main.Main', {
   },
 
   layout: {
-    type: 'border'
+    type: 'fit'
   },
 
-  items: [{
-    xtype: 'panel',
-    bind: {
-      title: '{name}'
-    },
-    region: 'west',
-    width: 250,
-    split: true,
-    tbar: [{
-      text: 'Dodaj',
-      handler: 'onClickButton'
-    },
-      {
-        text: 'Wklej',
-        handler: 'onPasteClickButton'
-      }]
-  }, {
-    region: 'center',
-    xtype: 'tabpanel',
-    reference: 'tabs',
-  }]
+  items: [
+    {
+      bind: {
+        title: '{name}'
+      },
+      region: 'center',
+      xtype: 'tabpanel',
+      tools: [
+        {
+          type: 'plus',
+          tooltip: 'Dodaj',
+          handler: 'onClickButton'
+        },
+        {
+          type: 'collapse',
+          tooltip: 'Wklej',
+          handler: 'onPasteClickButton'
+        }
+      ],
+      reference: 'tabs',
+    }
+  ]
 });

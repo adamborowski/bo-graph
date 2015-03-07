@@ -26,24 +26,41 @@ Ext.define('bo.view.tab.TabController', {
     tasks.remove(selected);
   },
   init: function () {
-    this.getView().setTitle('Seria ' + ++this.self.cnt);
     var tasks = this.getViewModel().get('tasks');
+    tasks.on({
+      scope: this,
+      update: this.updateChart,
+      datachanged: this.updateChart,
+      add: this.assignColor
+    });
+    this.getView().setTitle('Seria ' + ++this.self.cnt);
+
     var plain = this.getPlain();
     var data = [];
     if (plain) {
       var rows = plain.split('\n');
       for (var i = 0; i < rows.length; i++) {
         var row = rows[i].split(' ');
+        row.push(this.createColor());
         data.push(row)
       }
       tasks.setData(data);
     }
-    tasks.on({
-      scope: this,
-      update: this.updateChart,
-      datachanged: this.updateChart
-    });
-    this.updateChart();
+
+  },
+  colorTable: [
+    '#0000FF', '#FFA500', '#778899', '#228B22', '#FF0000', '#20B2AA', '#8A2BE2', '#FFD700', '#3E467D', '#00FF7F', '#FF9966', '#33CC33', '#008080', '#000033 ', '#F2644A', '#996633', '#FFCC66  ', '#87CEFA', '#F08080', '#6666FF', '#FF6347', '#66FF33', '#D2B48C'
+  ],
+  createColor: function () {
+    var a = this.colorTable[0];
+    this.colorTable.push(this.colorTable.shift());
+    return a;
+  },
+  assignColor: function (store, records) {
+    for (var i = 0; i < records.length; i++) {
+      var rec = records[i];
+      rec.set('color', this.createColor());
+    }
   },
   updateChart: function () {
     var tasks = this.getViewModel().get('tasks');
@@ -51,6 +68,9 @@ Ext.define('bo.view.tab.TabController', {
     var processor = Ext.create('bo.sim.Processor', {
       queue: {
         //capacity:4
+      },
+      eventBus: {
+        logEvents: false
       },
       coreDefaults: {
         performance: 1

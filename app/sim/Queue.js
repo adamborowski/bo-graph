@@ -1,10 +1,12 @@
 Ext.define('bo.sim.Queue', {
+  extend: 'Ext.util.Observable',
   config: {
     capacity: Infinity,
     processor: null
   },
   constructor: function (config) {
     this.initConfig(config);
+    this.callParent(arguments);
     this.unconsumedTasks = [];//zadania które mają min. 1 wolny part
     this.fullConsumedTasks = [];//zadania które nie mają już wolnego partu
   },
@@ -46,5 +48,6 @@ Ext.define('bo.sim.Queue', {
   onTaskFinish: function (task, time) {
     //skoro task został już całkowicie zakończony, można go usunąć z kolejki
     Ext.Array.remove(this.fullConsumedTasks, task);
+    this.fireEvent('taskExit', this, task, time);
   }
 });

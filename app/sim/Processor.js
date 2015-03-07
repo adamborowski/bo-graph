@@ -3,6 +3,7 @@ Ext.define('bo.sim.Processor', {
   config: {
     timeline: {},
     eventBus: {},
+    output: {},
     cores: [],
     queue: {},
     coreDefaults: {},
@@ -29,6 +30,17 @@ Ext.define('bo.sim.Processor', {
       bus = Ext.create('bo.sim.EventBus', bus);
     }
     return bus;
+  },
+  applyOutput: function (timeline) {
+    timeline = timeline || {};
+    if (timeline.isInstance) {
+      timeline.setProcessor(this);
+    }
+    else {
+      timeline.processor = this;
+      timeline = Ext.create('bo.sim.PropertyTimeline', timeline);
+    }
+    return timeline;
   },
   applyTimeline: function (timeline) {
     timeline = timeline || {};
@@ -67,6 +79,10 @@ Ext.define('bo.sim.Processor', {
   process: function () {
     var tl = this.getTimeline();
     var time = tl.nextTime();
+    var o = this.getOutput(), q = this.getQueue();
+    o.registerTime(time, {
+      numTasks: q.getLength()
+    });
     this.fireEvent('beforeprocess', this, time);
     //trzeba procesory przetwarzać fazami, gdyż
     //nie może się zdarzyć, że
@@ -75,14 +91,22 @@ Ext.define('bo.sim.Processor', {
       cores[i].processPhase1(time);//tutaj kończone są zadania
     }
 
-    this.getEventBus().registerEvent(this, 'unfinished ' + this.getQueue().getUnfinished());
+    o.registerTime(time, {
+      unfinished: q.getUnfinished()
+    });
     this.fireEvent('process', this, time);//tutaj obiekty zewnętrzne mogą dodać np zadanie do kolejki
-    this.getEventBus().registerEvent(this, 'unfinished ' + this.getQueue().getUnfinished());
-
+    o.registerTime(time, {
+      unfinished: q.getUnfinished()
+    });
     for (i = 0; i < nCores; i++) {
       cores[i].processPhase2(time);//tutaj pobierane są zadania
     }
     this.fireEvent('afterprocess', this, time);
+
+    this.getOutput().registerTime(time, {
+      numTasks: this.getQueue().getLength()
+    });
+
     if (tl.hasNextTime()) {
       Ext.defer(this.process, this.getSimSpeed(), this);
     }

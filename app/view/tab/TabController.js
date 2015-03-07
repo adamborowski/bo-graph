@@ -16,8 +16,8 @@ Ext.define('bo.view.tab.TabController', {
   },
   addRow: function () {
     var tasks = this.getViewModel().get('tasks');
-    var time = tasks.last().get('time')
-    tasks.add({time: time});
+    var time = tasks.last() ? tasks.last().get('time') : 0;
+    tasks.add({time: time, size: 1});
   },
   removeRow: function () {
     var tasks = this.getViewModel().get('tasks');
@@ -69,39 +69,11 @@ Ext.define('bo.view.tab.TabController', {
         }
       })
     });
+
     processor.start();
 
-
-    var events = {};
-
-    tasks.each(function (model) {
-      var time = model.get('time');
-      var size = model.get('size');
-      var endTime = time + size;
-      if (events[time] == null)events[time] = {started: 0, ended: 0};
-      if (events[endTime] == null)events[endTime] = {started: 0, ended: 0};
-      events[time].started += size;
-      events[endTime].ended += size;
-    });
-    var e = [];
-    for (var n in events) {
-      events[n].time = Number(n);
-      e.push(events[n]);
-    }
-    e = Ext.Array.sort(e, function (a, b) {
-      return a.time - b.time;
-    });
-    e.unshift({time: 0, started: 0, ended: 0});
-    //w e mamy posortowane
-    var current = 0;
-    for (var i = 0; i < e.length; i++) {
-      var event = e[i];
-      current -= event.ended;
-      current += event.started;
-      event.current = current;
-    }
-
-    //todo trzeba zrobić symulację - każdy rdzeń pobiera zadania, uwzględnić rozmiar bufora, zdolność przetwarzania procesrów
-    //trzeba wykorzystać event i event.time do upływu czasu symulacji
+    ///
+    this.getViewModel().get('unfinished').setData(processor.getOutput().getTimelineForProperty('unfinished'));
+    this.getViewModel().get('numTasks').setData(processor.getOutput().getTimelineForProperty('numTasks'));
   }
 });

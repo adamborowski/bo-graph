@@ -9,6 +9,13 @@ Ext.define('bo.sim.EventBus', {
     this.callParent(arguments);
     this.events = [];
   },
+  getEvents: function (type) {
+    if (type == null)
+      return this.events;
+    else return Ext.Array.filter(this.events, function (e) {
+      return e.type == type
+    });
+  },
   registerEvent: function (object, msg) {
     var event = {
       object: object,

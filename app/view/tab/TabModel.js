@@ -13,11 +13,17 @@ Ext.define('bo.view.tab.TabModel', {
     tasks: {
       sorters: [
         {
-          property:'time',
-          direction:'ASC'
+          property: 'time',
+          direction: 'ASC'
         }
       ],
       model: 'bo.model.Task'
+    },
+    numTasks: {
+      model: 'bo.model.ChartModel'
+    },
+    unfinished: {
+      model: 'bo.model.ChartModel'
     }
   }
 

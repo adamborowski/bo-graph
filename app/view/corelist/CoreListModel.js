@@ -9,7 +9,8 @@ Ext.define('bo.view.corelist.CoreListModel', {
     cores: {
       model: 'bo.model.Core',
       data: [
-        [2, 0]
+        [1],
+        [1]
       ]
     }
   }

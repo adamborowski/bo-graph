@@ -10,6 +10,6 @@ Ext.define('bo.model.Task', {
     }, {
       name: 'color',
       type: 'string'
-    }
+    }, 'startTime', 'finishTime', 'delay'
   ]
 });

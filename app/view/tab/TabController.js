@@ -31,6 +31,7 @@ Ext.define('bo.view.tab.TabController', {
   init: function () {
     this.lookupReference('chart').setStore(this.getViewModel().get('unfinished'));
     this.lookupReference('chart_n_t').setStore(this.getViewModel().get('numTasks'));
+    this.lookupReference('chart_failed').setStore(this.getViewModel().get('numFailed'));
     this.lookupReference('coreList').getController().on('coreupdate', this.updateChart, this);
     var tasks = this.getViewModel().get('tasks');
     tasks.on({
@@ -107,9 +108,25 @@ Ext.define('bo.view.tab.TabController', {
     coreVisController.setProcessor(processor);
     coreVisController.setTaskStore(tasks);
     processor.start();
+
+    var processedTasks = producer.getTasks();
+    for (var i = 0; i < processedTasks.length; i++) {
+      var task = processedTasks[i];
+      var taskModel = tasks.getAt(task.getOrder());
+      var st = task.getStartTime();
+      var ft = task.getFinishTime();
+      taskModel.set({
+        startTime: st,
+        finishTime: ft,
+        delay: isNaN(ft) ? null : ft - task.getEnqueueTime() - task.getSize()
+      }, {silent: true});
+    }
+    this.lookupReference('grid').getView().refresh();
+
     ///
     this.getViewModel().get('unfinished').setData(processor.getOutput().getTimelineForProperty('unfinished'));
     this.getViewModel().get('numTasks').setData(processor.getOutput().getTimelineForProperty('numTasks'));
+    this.getViewModel().get('numFailed').setData(processor.getOutput().getTimelineForProperty('numFailed'));
 
   }
 });

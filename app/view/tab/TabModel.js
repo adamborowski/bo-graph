@@ -24,6 +24,9 @@ Ext.define('bo.view.tab.TabModel', {
     },
     unfinished: {
       model: 'bo.model.ChartModel'
+    },
+    numFailed: {
+      model: 'bo.model.ChartModel'
     }
   }
 

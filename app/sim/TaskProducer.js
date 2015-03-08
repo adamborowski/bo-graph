@@ -8,7 +8,7 @@ Ext.define('bo.sim.TaskProducer', {
     tasks = Ext.Array.from(tasks);
     return Ext.Array.map(tasks, function (task, ord) {
       if (!task.isInstance) {
-        Ext.apply(task, this.getTaskDefaults());
+        Ext.applyIf(task, this.getTaskDefaults());
         task = Ext.create('bo.sim.Task', task);
       }
       task.setOrder(ord);
@@ -33,9 +33,19 @@ Ext.define('bo.sim.TaskProducer', {
   onProcessorProcess: function (processor, time) {
     var tasks = this.remainingTasks;
     var queue = processor.getQueue();
+    var numFailed = 0;
+    var failedTasks = [];
     for (var currentTask = tasks[0]; currentTask && currentTask.getEnqueueTime() == time; tasks.shift(), currentTask = tasks[0]) {
       //dodawaj taski o ile należą do tego punktu w czasie
-      queue.addTask(currentTask);
+      var success = queue.addTask(currentTask);
+      if (!success) {
+        numFailed++;
+        failedTasks.push(currentTask);
+      }
     }
+    processor.getOutput().registerTime(time, {
+      numFailed: numFailed,
+      failedTasks: failedTasks
+    })
   }
 });

@@ -30,7 +30,7 @@ Ext.define('bo.view.tab.Tab', {
         align: 'stretch',
         pack: 'stretch'
       },
-      width: 200,
+      width: 300,
       title: 'zgłoszenia',
       collapsible: true,
       collapsed: false,
@@ -51,7 +51,6 @@ Ext.define('bo.view.tab.Tab', {
         {
           xtype: 'grid',
           flex: 1,
-
           reference: 'grid',
           selModel: {
             mode: 'MULTI'
@@ -103,6 +102,33 @@ Ext.define('bo.view.tab.Tab', {
                   xtype: 'numberfield',
                   step: 0.1
                 }
+              },
+              {
+                text: 't*<sub>n</sub>',
+                dataIndex: 'startTime',
+                xtype: 'numbercolumn',
+                flex: 1,
+                editor: false,
+                tdCls: 'a-cell-readonly',
+                emptyCellText: '-'
+              },
+              {
+                text: 't<sup>-</sup><sub>n</sub>',
+                dataIndex: 'finishTime',
+                xtype: 'numbercolumn',
+                flex: 1,
+                editor: false,
+                tdCls: 'a-cell-readonly',
+                emptyCellText: '-'
+              },
+              {
+                text: 'w<sub>n</sub>',
+                xtype: 'numbercolumn',
+                flex: 1,
+                dataIndex: 'delay',
+                editor: false,
+                tdCls: 'a-cell-readonly',
+                emptyCellText: '-'
               }
             ]
           }
@@ -219,6 +245,59 @@ Ext.define('bo.view.tab.Tab', {
               hideDelay: 0,
               renderer: function (rec, item) {
                 this.setHtml(Ext.String.format('N({0})={1}', rec.get('time'), rec.get('numTasks')));
+              }
+            }
+          }]
+        },
+        {
+          xtype: 'cartesian',
+          animation: USE_CHART_ANIMATION,
+          reference: 'chart_failed',
+          flex: 0.4,
+          axes: [{
+            type: 'numeric',
+            fields: 'numFailed',
+            position: 'left',
+            grid: true,
+            title: 'R(t)'
+          }, {
+            type: 'numeric',
+            fields: 'time',
+            position: 'bottom',
+            grid: true,
+            title: 't[s]'
+          }],
+          series: [{
+            type: 'bar',
+            xField: 'time',
+            yField: 'numFailed',
+            style: {
+              lineWidth: 0,
+              fillStyle: '#ce3553',
+              strokeStyle: '#ca3355',
+              maxBarWidth: 20
+            },
+            highlight: {
+              fillStyle: '#ca3355',
+              lineWidth: 2,
+              strokeStyle: '#000'
+            },
+            tooltip: {
+              trackMouse: true,
+              style: 'background: #fff',
+              showDelay: 0,
+              dismissDelay: 0,
+              hideDelay: 0,
+              renderer: function (rec, item) {
+                var failedTasks = rec.get('failedTasks');
+                var str = "";
+                if (failedTasks.length) {
+                  str = "<br/>Odrzucone: ";
+                  for (var i = 0; i < failedTasks.length; i++) {
+                    str += 't<sub>' + (failedTasks[i].getOrder() + 1) + '</sub> ';
+                  }
+                }
+                this.setHtml(Ext.String.format('R({0})={1}', rec.get('time'), rec.get('numFailed')) + str);
               }
             }
           }]

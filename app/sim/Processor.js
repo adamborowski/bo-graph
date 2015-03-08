@@ -62,7 +62,7 @@ Ext.define('bo.sim.Processor', {
       } else {
         core.processor = this;
         core.order = order;
-        Ext.apply(core, this.getCoreDefaults());
+        Ext.applyIf(core, this.getCoreDefaults());
         core = Ext.create('bo.sim.Core', core);
       }
       return core;

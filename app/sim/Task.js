@@ -83,6 +83,15 @@ Ext.define('bo.sim.Task', {
       s += this.finishedParts[i].getWorkDone();
     }
     return s;
+  },
+  getStartTime: function () {
+    var part = this.unconsumedParts[0] || this.consumedParts[0] || this.finishedParts[0];
+    return part.getStartTime();
+  },
+  getFinishTime: function () {
+    //nie zawsze ostatnia partia zostanie zakończona jako ostatnia!
+    return Ext.Array.max(Ext.Array.map(this.finishedParts, function (fp) {
+      return fp.getFinishTime()
+    }));
   }
-
 });

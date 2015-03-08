@@ -73,7 +73,7 @@ Ext.define('bo.view.corevis.CoreVisController', {
       });
       var text = surface.add({
         type: 'text',
-        text: "Core " + i,
+        text: "Core " + (i + 1),
         textAlign: 'center',
         x: rect.x + 0.5 * rect.width,
         y: rect.y + 0.5 * rect.height,

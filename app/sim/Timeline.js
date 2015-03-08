@@ -9,7 +9,9 @@ Ext.define('bo.sim.Timeline', {
    */
   registerTime: function (time) {
     var a = this.times;
-    a.splice(Ext.Array.binarySearch(a, time, Ext.Array.numericSortFn), 0, time);
+    var timeIndex = Ext.Array.binarySearch(a, time, Ext.Array.numericSortFn);
+    if (a[timeIndex-1] != time)
+      a.splice(timeIndex, 0, time);
   },
   /**
    * @return time

@@ -118,7 +118,7 @@ Ext.define('bo.view.tab.TabController', {
       taskModel.set({
         startTime: st,
         finishTime: ft,
-        delay: isNaN(ft) ? null : ft - task.getEnqueueTime() - task.getSize()
+        delay: isNaN(ft) ? null : st - task.getEnqueueTime()
       }, {silent: true});
     }
     this.lookupReference('grid').getView().refresh();
@@ -126,7 +126,8 @@ Ext.define('bo.view.tab.TabController', {
     ///
     this.getViewModel().get('unfinished').setData(processor.getOutput().getTimelineForProperty('unfinished'));
     this.getViewModel().get('numTasks').setData(processor.getOutput().getTimelineForProperty('numTasks'));
-    this.getViewModel().get('numFailed').setData(processor.getOutput().getTimelineForProperty('numFailed'));
+    this.getViewModel().get('numFailed').setData(producer.failedTasks);
+    this.lookupReference('chart_failed').getAxis(1).setMaximum(this.lookupReference('chart').getAxis(1).getMaximum());
 
   }
 });

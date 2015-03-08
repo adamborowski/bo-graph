@@ -14,9 +14,13 @@ Ext.define('bo.view.corelist.CoreListController', {
   },
   removeRow: function () {
     var tasks = this.getView().getStore();
-    if (tasks.getCount() > 1) {
+    var numTasks = tasks.getCount();
+    if (numTasks > 1) {
       var grid = this.getView();
       var selected = grid.getSelection();
+      if (selected.length == numTasks) {
+        selected.shift()
+      }
       tasks.remove(selected.length ? selected : tasks.last());
     }
   },

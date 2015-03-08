@@ -30,7 +30,7 @@ Ext.define('bo.view.tab.Tab', {
         align: 'stretch',
         pack: 'stretch'
       },
-      width: 300,
+      width: 330,
       title: 'zgłoszenia',
       collapsible: true,
       collapsed: false,
@@ -258,17 +258,19 @@ Ext.define('bo.view.tab.Tab', {
             type: 'numeric',
             fields: 'numFailed',
             position: 'left',
+            minimum: 0,
             grid: true,
             title: 'R(t)'
           }, {
             type: 'numeric',
             fields: 'time',
+            minimum: 0,
             position: 'bottom',
             grid: true,
             title: 't[s]'
           }],
           series: [{
-            type: 'bar',
+            type: 'area',
             xField: 'time',
             yField: 'numFailed',
             style: {
@@ -281,6 +283,11 @@ Ext.define('bo.view.tab.Tab', {
               fillStyle: '#ca3355',
               lineWidth: 2,
               strokeStyle: '#000'
+            },
+            marker: {
+              radius: 2,
+              lineWidth: 4,
+              strokeStyle: '#8B263F'
             },
             tooltip: {
               trackMouse: true,

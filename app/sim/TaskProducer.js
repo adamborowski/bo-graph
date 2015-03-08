@@ -29,23 +29,29 @@ Ext.define('bo.sim.TaskProducer', {
       tl.registerTime(task.getEnqueueTime());
     }, this);
     this.remainingTasks = Ext.Array.clone(this.getTasks());
+    this.numFailed = 0;
+    this.failedTasks = [];
   },
   onProcessorProcess: function (processor, time) {
     var tasks = this.remainingTasks;
     var queue = processor.getQueue();
-    var numFailed = 0;
     var failedTasks = [];
     for (var currentTask = tasks[0]; currentTask && currentTask.getEnqueueTime() == time; tasks.shift(), currentTask = tasks[0]) {
       //dodawaj taski o ile należą do tego punktu w czasie
       var success = queue.addTask(currentTask);
       if (!success) {
-        numFailed++;
+        this.numFailed++;
         failedTasks.push(currentTask);
       }
     }
-    processor.getOutput().registerTime(time, {
-      numFailed: numFailed,
-      failedTasks: failedTasks
-    })
+
+    if (this.lastFail)
+      this.failedTasks.push(Ext.applyIf({time: time}, this.lastFail));
+    this.lastFail = {time: time, numFailed: this.numFailed, failedTasks: failedTasks};
+    this.failedTasks.push(this.lastFail);
+    //processor.getOutput().registerTime(time, {
+    //  numFailed: numFailed,
+    //  failedTasks: failedTasks
+    //})
   }
 });

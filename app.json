@@ -97,6 +97,10 @@
    */
   "js": [
     {
+      "path": "lib/random.js",
+      "includeInBundle": true
+    },
+    {
       "path": "${framework.dir}/build/ext-all-rtl-debug.js"
     },
     {

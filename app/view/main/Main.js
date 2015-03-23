@@ -6,7 +6,7 @@
  * TODO - Replace this content of this view to suite the needs of your application.
  */
 Ext.define('bo.view.main.Main', {
-  extend: 'Ext.container.Container',
+  extend: 'Ext.panel.Panel',
   requires: [
     'bo.view.main.MainController',
     'bo.view.main.MainModel'
@@ -18,31 +18,63 @@ Ext.define('bo.view.main.Main', {
   viewModel: {
     type: 'main'
   },
-
   layout: {
     type: 'fit'
   },
+  dockedItems: [
+    {
+      xtype: 'toolbar',
+      cls: 'a-main-toolbar',
+      dock: 'top',
+      items: [
+        {
+          xtype: 'label',
+          bind: {
+            html: '{name}'
+          }
+        },
+        '->',
+        {
+          text: 'menu',
+          menu: [
+            {
+              text: 'Nowa sesja',
+              menu: {
+                items: [
+                  {
+                    text: 'Pusta',
+                    handler: 'onClickButton'
+                  },
+                  {
+                    text: 'Ze schowka',
+                    handler: 'onPasteClickButton'
+                  }
+                ]
+              }
+            },
+            {
+              text: 'Generuj strumień zgłoszeń'
+            },
+            '-',
+            {
+              text: 'O programie',
+              handler: 'onAboutClick'
+            }
 
+          ]
+        }
+      ]
+    }
+  ],
   items: [
     {
-      bind: {
-        title: '{name}'
-      },
       region: 'center',
       xtype: 'tabpanel',
-      tools: [
-        {
-          type: 'plus',
-          tooltip: 'Dodaj',
-          handler: 'onClickButton'
-        },
-        {
-          type: 'collapse',
-          tooltip: 'Wklej',
-          handler: 'onPasteClickButton'
-        }
-      ],
       reference: 'tabs',
+      defaults: {
+        closable: true
+      },
+      plugins: 'tabreorderer'
     }
   ]
 });

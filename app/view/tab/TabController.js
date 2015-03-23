@@ -40,7 +40,7 @@ Ext.define('bo.view.tab.TabController', {
       datachanged: this.updateChart,
       add: this.assignColor
     });
-    this.getView().setTitle('Seria ' + ++this.self.cnt);
+    this.getView().setTitle('Sesja ' + ++this.self.cnt);
 
     var plain = this.getPlain();
     var data = [];

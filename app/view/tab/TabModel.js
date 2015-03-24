@@ -29,6 +29,4 @@ Ext.define('bo.view.tab.TabModel', {
       model: 'bo.model.ChartModel'
     }
   }
-
-  //TODO - add data, formulas and/or methods to support your view
 });

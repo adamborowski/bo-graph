@@ -36,7 +36,8 @@ Ext.define('bo.view.generator.Generator', {
       fbar: [
         '->',
         {
-          text: 'Twórz sesję'
+          text: 'Twórz sesję',
+          itemId: 'openSessionButton'
         }
       ]
     }

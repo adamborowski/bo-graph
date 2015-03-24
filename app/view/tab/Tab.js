@@ -84,9 +84,13 @@ Ext.define('bo.view.tab.Tab', {
                 }
               },
               {
-                text: 't<sup>+</sup><sub>n</sub>',
+                text: 'a<sub>n</sub>',
                 xtype: 'numbercolumn',
                 dataIndex: 'time',
+                renderer: function (value, meta, record, rowIndex,colIndex, store) {
+                  if (rowIndex == 0)return value;
+                  return value - store.getAt(rowIndex - 1).data.time;
+                },
                 flex: 1,
                 editor: {
                   xtype: 'numberfield',
@@ -314,3 +318,5 @@ Ext.define('bo.view.tab.Tab', {
   ]
 
 });
+//todo w tasku dać model nie t+ t- tylko an i zapomniec o t
+//dodać range selector w html ktory nam pozwoli wykadrować fragment do wizualizacji dotychczasowej

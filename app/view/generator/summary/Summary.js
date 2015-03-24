@@ -22,7 +22,7 @@ Ext.define('bo.view.generator.summary.Summary', {
         {
           type: 'numeric',
           fields: 'propability',
-          minimum:0,maximum:1,
+          minimum:0,
           position: 'left',
           grid: true,
           title: 'p(a)'
@@ -57,7 +57,7 @@ Ext.define('bo.view.generator.summary.Summary', {
           fields: 'propability',
           position: 'left',
           grid: true,
-          minimum:0,maximum:1,
+          minimum:0,
           title: 'p(b)'
         },
         {

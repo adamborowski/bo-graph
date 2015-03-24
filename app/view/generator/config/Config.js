@@ -11,7 +11,7 @@ Ext.define('bo.generator.Config', {
     return {
       population: this.down('#population').getValue(),
       aRandom: Ext.apply({seed: seed}, this.down('#aRandom').getValue()),
-      bRandom: Ext.apply({seed: seed}, this.down('#bRandom').getValue())
+      bRandom: Ext.apply({seed: seed+1}, this.down('#bRandom').getValue())
     }
   },
   items: [

@@ -14,6 +14,7 @@ Ext.define('bo.view.main.MainController', {
 
   alias: 'controller.main',
   init: function () {
+    bo.app.mainController = this;
     var tabs = this.lookupReference('tabs');
     var newTab = tabs.add({
       xtype: 'app-tab',
@@ -26,6 +27,12 @@ Ext.define('bo.view.main.MainController', {
 
     this.onGenerator();
 
+  },
+  addTab: function (tab) {
+    var tabs = this.lookupReference('tabs');
+    tab = tabs.add(tab);
+    tabs.setActiveItem(tab);
+    return tab;
   },
   onClickButton: function () {
     var tabs = this.lookupReference('tabs');

@@ -9,7 +9,8 @@ Ext.define('bo.view.tab.TabController', {
   extend: 'Ext.app.ViewController',
   alias: 'controller.tab',
   config: {
-    plain: null
+    plain: null,
+    data:null
   },
   statics: {
     cnt: 0
@@ -53,6 +54,8 @@ Ext.define('bo.view.tab.TabController', {
       }
       tasks.setData(data);
     }
+
+
     this.lookupReference('corevis').getController().setChart(this.lookupReference('chart'));
 
   },

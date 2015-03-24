@@ -2,7 +2,7 @@ Ext.define('bo.view.generator.GeneratorController', {
   extend: 'Ext.app.ViewController',
   alias: 'controller.generator',
   init: function () {
-
+    this.getView().down('#openSessionButton').on('click', this.onOpenSession, this);
   },
   onGenerate: function () {
     var cfg = this.getView().down('#generatorConfig').getValue();
@@ -33,5 +33,16 @@ Ext.define('bo.view.generator.GeneratorController', {
   },
   onOpenSession: function () {
     //todo otwieranie nowej sesji z tymi wygenerowanymi danymi
+    var rows = this.currentRows;
+    bo.app.mainController.addTab({
+      xtype: 'app-tab',
+      viewModel: {
+        stores: {
+          tasks: {
+            data: rows
+          }
+        }
+      }
+    });
   }
 });

@@ -1,4 +1,4 @@
-Ext.define('bo.view.generator.GeneratorModel', {
+Ext.define('bo.view.generator.distr.DistrModel', {
   extend: 'Ext.app.ViewModel',
   alias: 'viewmodel.distr',
   data: {

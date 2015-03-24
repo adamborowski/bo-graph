@@ -1,6 +1,12 @@
 Ext.define('bo.view.generator.Generator', {
   xtype: 'generator',
   extend: 'Ext.window.Window',
+  controller: {
+    type: 'generator'
+  },
+  viewModel: {
+    type: 'generator'
+  },
   maximizable: true,
   layout: 'border',
   width: 1000,
@@ -11,19 +17,22 @@ Ext.define('bo.view.generator.Generator', {
       region: 'west',
       width: 230,
       xtype: 'generator.config',
+      itemId: 'generatorConfig',
       split: true,
       title: 'Ustawienia generatora',
       fbar: [
         '->',
         {
-          text: 'Generuj strumień'
+          text: 'Generuj strumień',
+          handler: 'onGenerate'
         }
       ]
     },
     {
       region: 'center',
       title: 'Wygenerowany strumień zgłoszeń',
-      html: 'wykresy po generowaniu',
+      xtype: 'generator.summary',
+      itemId: 'summary',
       fbar: [
         '->',
         {

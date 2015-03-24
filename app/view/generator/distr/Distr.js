@@ -4,6 +4,9 @@ Ext.define('bo.view.generator.distr.Distr', {
   viewModel: {
     type: 'distr'
   },
+  controller: {
+    type: 'distr'
+  },
   getValue: function () {
     var data = this.getViewModel().data;
     return Ext.apply({

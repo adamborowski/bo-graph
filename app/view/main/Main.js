@@ -53,7 +53,8 @@ Ext.define('bo.view.main.Main', {
               }
             },
             {
-              text: 'Generuj strumień zgłoszeń'
+              text: 'Generuj strumień zgłoszeń',
+              handler:'onGenerator'
             },
             '-',
             {

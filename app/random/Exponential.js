@@ -2,9 +2,9 @@ Ext.define('bo.random.Exponential', {
   extend: 'bo.random.AbstractRandom',
   alias: 'random.exponential',
   config: {
-    gamma: 1
+    lambda: 1
   },
   generateValue: function () {
-    return this.stream.exponential(this.gamma);
+    return this.stream.exponential(this.lambda);
   }
 });

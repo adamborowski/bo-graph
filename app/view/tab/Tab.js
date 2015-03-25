@@ -164,6 +164,7 @@ Ext.define('bo.view.tab.Tab', {
         },
         {
           xtype: 'cartesian',
+          interactions:'crosszoom',
           animation: USE_CHART_ANIMATION,
           reference: 'chart',
           flex: 1,

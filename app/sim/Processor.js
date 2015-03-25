@@ -77,41 +77,48 @@ Ext.define('bo.sim.Processor', {
     this.process();
   },
   process: function () {
-    var tl = this.getTimeline();
-    var time = tl.nextTime();
-    var o = this.getOutput(), q = this.getQueue();
-    o.registerTime(time, {
-      numTasks: q.getLength()
-    });
-    this.fireEvent('beforeprocess', this, time);
-    //trzeba procesory przetwarzać fazami, gdyż
-    //nie może się zdarzyć, że
-    var i, cores = this.getCores(), nCores = cores.length;
-    for (i = 0; i < nCores; i++) {
-      cores[i].processPhase1(time);//tutaj kończone są zadania
-    }
+    while (true) {
+      var tl = this.getTimeline();
+      var time = tl.nextTime();
+      var o = this.getOutput(), q = this.getQueue();
+      o.registerTime(time, {
+        numTasks: q.getLength()
+      });
+      this.fireEvent('beforeprocess', this, time);
+      //trzeba procesory przetwarzać fazami, gdyż
+      //nie może się zdarzyć, że
+      var i, cores = this.getCores(), nCores = cores.length;
+      for (i = 0; i < nCores; i++) {
+        cores[i].processPhase1(time);//tutaj kończone są zadania
+      }
 
-    o.registerTime(time, {
-      unfinished: q.getUnfinished()
-    });
-    this.fireEvent('process', this, time);//tutaj obiekty zewnętrzne mogą dodać np zadanie do kolejki
-    o.registerTime(time, {
-      unfinished: q.getUnfinished()
-    });
-    for (i = 0; i < nCores; i++) {
-      cores[i].processPhase2(time);//tutaj pobierane są zadania
-    }
-    this.fireEvent('afterprocess', this, time);
+      o.registerTime(time, {
+        unfinished: q.getUnfinished()
+      });
+      this.fireEvent('process', this, time);//tutaj obiekty zewnętrzne mogą dodać np zadanie do kolejki
+      o.registerTime(time, {
+        unfinished: q.getUnfinished()
+      });
+      for (i = 0; i < nCores; i++) {
+        cores[i].processPhase2(time);//tutaj pobierane są zadania
+      }
+      this.fireEvent('afterprocess', this, time);
 
-    this.getOutput().registerTime(time, {
-      numTasks: this.getQueue().getLength()
-    });
+      this.getOutput().registerTime(time, {
+        numTasks: this.getQueue().getLength()
+      });
 
-    if (tl.hasNextTime()) {
-      Ext.defer(this.process, this.getSimSpeed(), this);
-    }
-    else {
-      this.fireEvent('finish', this, time);
+      if (tl.hasNextTime()) {
+        //var simSpeed = this.getSimSpeed();
+        //if (simSpeed == 0)
+        //  this.process();
+        //else
+        //  Ext.defer(this.process, simSpeed, this);
+      }
+      else {
+        this.fireEvent('finish', this, time);
+        break;
+      }
     }
   }
 });

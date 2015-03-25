@@ -1,9 +1,11 @@
 Ext.define('bo.generator.Generator', {
   config: {
     population: 100,
+    minA: 0,
+    minB: 0.01,
     aRandom: 'normal',
     bRandom: 'normal',
-    numBins:20
+    numBins: 20
   },
   constructor: function (config) {
     this.initConfig(config);
@@ -22,6 +24,8 @@ Ext.define('bo.generator.Generator', {
   },
   generate: function () {
     var numIter = this.getPopulation();
+    var minA = this.getMinA();
+    var minB = this.getMinB();
     var ar = this.getARandom(), br = this.getBRandom();
     var data = [];
     var time = 0;
@@ -29,7 +33,8 @@ Ext.define('bo.generator.Generator', {
     for (var i = 0; i < numIter; i++) {
       a = ar.generateValue();
       b = br.generateValue();
-
+      if (a < minA)a = minA;
+      if (b < minB)b = minB;
       data.push({
         time: time,
         size: b,

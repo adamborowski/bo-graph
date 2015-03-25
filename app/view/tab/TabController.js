@@ -107,9 +107,9 @@ Ext.define('bo.view.tab.TabController', {
       })
     });
 
-    var coreVisController = this.lookupReference('corevis').getController();
-    coreVisController.setProcessor(processor);
-    coreVisController.setTaskStore(tasks);
+    //var coreVisController = this.lookupReference('corevis').getController();
+    //coreVisController.setProcessor(processor);
+    //coreVisController.setTaskStore(tasks);
     processor.start();
 
     var processedTasks = producer.getTasks();

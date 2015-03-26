@@ -31,7 +31,7 @@ Ext.define('bo.view.tab.Tab', {
         pack: 'stretch'
       },
       width: 420,
-      split:true,
+      split: true,
       title: 'zgłoszenia',
       collapsible: true,
       collapsed: false,
@@ -168,10 +168,26 @@ Ext.define('bo.view.tab.Tab', {
           height: 250,
           animCollapse: false
         }
+      ],
+      fbar: [
+        {
+          xtype: 'label',
+          html: 'status',
+          itemId: 'status',
+          flex: 1
+        },
+        {
+          xtype: 'button',
+          text: 'Symuluj',
+          itemId: 'simBtn',
+          tooltip: 'Ręczne uruchomienie symulacji <kbd>/</kbd> lub <kbd>~</kbd>',
+          handler: 'doSimulationNow'
+        }
       ]
     },
     {
       xtype: 'panel',
+      itemId: 'loadingContainer',
       padding: 1,
       region: 'center',
       layout: {
@@ -190,6 +206,7 @@ Ext.define('bo.view.tab.Tab', {
           xtype: 'dygraph',
           reference: 'ut_dygraph',
           flex: 0.7,
+          html: '<i class="a-gray a-start-info">rozpocznij symulację</i>',
           options: {
             labels: ['t[s]', 'U(t)'],
             ylabel: 'U(t)',
@@ -236,5 +253,3 @@ Ext.define('bo.view.tab.Tab', {
   ]
 
 });
-//todo w tasku dać model nie t+ t- tylko an i zapomniec o t
-//dodać range selector w html ktory nam pozwoli wykadrować fragment do wizualizacji dotychczasowej

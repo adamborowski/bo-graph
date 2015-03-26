@@ -44,5 +44,6 @@ Ext.define('bo.view.generator.GeneratorController', {
         }
       }
     });
+    this.closeView();
   }
 });

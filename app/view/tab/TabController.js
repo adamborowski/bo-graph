@@ -10,7 +10,9 @@ Ext.define('bo.view.tab.TabController', {
   alias: 'controller.tab',
   config: {
     plain: null,
-    data: null
+    data: null,
+    immediatSimulationTaskLimit: 20,
+    deferredSimulationDelay: 500
   },
   statics: {
     cnt: 0
@@ -29,13 +31,38 @@ Ext.define('bo.view.tab.TabController', {
     var selected = grid.getSelection();
     tasks.remove(selected);
   },
+  keyEvHandler: function (e) {
+    if (e.keyCode == 191 || (e.keyCode == 192)) {
+      this.doSimulationNow()
+    }
+  },
   init: function () {
-    this.lookupReference('coreList').getController().on('coreupdate', this.updateChart, this);
+    if (this.view.rendered == false) {
+      this.afterRender = this.init;
+      return;
+    }
+    this.getView().focusable = true;
+    this.getView().setTabIndex(1);
+    this.mon(Ext.getWin(), 'keydown', this.keyEvHandler, this);
+
+    this.statusField = this.getView().down('#status');
+    this.simBtn = this.getView().down('#simBtn');
+    this.loadingContainer = this.getView().down('#loadingContainer').getEl().appendChild({
+      tag: 'div',
+      class: 'a-loader',
+      children: [{
+        tag: 'div',
+        class: 'a-spinner',
+        html: '<div id="circularG">\n    <div id="circularG_1" class="circularG">\n    </div>\n    <div id="circularG_2" class="circularG">\n    </div>\n    <div id="circularG_3" class="circularG">\n    </div>\n    <div id="circularG_4" class="circularG">\n    </div>\n    <div id="circularG_5" class="circularG">\n    </div>\n    <div id="circularG_6" class="circularG">\n    </div>\n    <div id="circularG_7" class="circularG">\n    </div>\n    <div id="circularG_8" class="circularG">\n    </div>\n</div>'
+      }]
+    });
+
+    this.lookupReference('coreList').getController().on('coreupdate', this.onDataChange, this);
     var tasks = this.getViewModel().get('tasks');
     tasks.on({
       scope: this,
-      update: this.updateChart,
-      datachanged: this.updateChart,
+      update: this.onDataChange,
+      datachanged: this.onDataChange,
       add: this.assignColor
     });
 
@@ -78,6 +105,7 @@ Ext.define('bo.view.tab.TabController', {
     }
   },
   updateChart: function () {
+
     console.info('chart update');
     var tasks = this.getViewModel().get('tasks');
 
@@ -153,6 +181,42 @@ Ext.define('bo.view.tab.TabController', {
         range: false,
         selection: false
       });
+      Ext.defer(function () {
+        this.loadingContainer.removeCls('a-loading');
+      }, 1, this);
     }, 1, this);
-  }
+    this.setStatus("");
+  },
+  simulationCanBeImmediate: function () {
+    var tasks = this.getViewModel().get('tasks');
+    return tasks.getCount() < this.getImmediatSimulationTaskLimit();
+  },
+  doSimulationNow: function () {
+    console.log('do simulation now');
+    this.setStatus("");
+    clearTimeout(this.timeout);
+
+    this.loadingContainer.addCls('a-loading');
+
+    Ext.defer(this.updateChart, 1, this);
+  },
+  deferSimulation: function () {
+    this.setStatus("Rozoczęcie symulacji z opóźnieniem");
+    clearTimeout(this.timeout);
+    this.timeout = Ext.defer(this.doSimulationNow, this.getDeferredSimulationDelay(), this);
+  },
+  onDataChange: function () {
+    if (this.simulationCanBeImmediate())
+      this.deferSimulation();
+    else
+      this.waitForSimulation()
+  },
+  waitForSimulation: function () {
+    clearTimeout(this.timeout);
+    this.setStatus("Naciśnij przycisk, aby rozpocząć symulację", true);
+  },
+  setStatus: function (content, highlightButton) {
+    this.statusField.setHtml(content);
+    this.simBtn[highlightButton ? 'addCls' : 'removeCls']('a-highlight-btn');
+  },
 });

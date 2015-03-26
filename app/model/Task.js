@@ -2,14 +2,35 @@ Ext.define('bo.model.Task', {
   extend: 'Ext.data.Model',
   fields: [
     {
-      name: 'time',
-      type: 'number',
-    }, {
+      name: 'interval',
+      type: 'number'
+    },
+    {
       name: 'size',
       type: 'number'
     }, {
       name: 'color',
       type: 'string'
-    }, 'startTime', 'finishTime', 'delay', 'interval'
+    },//after simulation
+    {
+      name: 'startTime',
+      type: 'number'
+    },
+    {
+      name: 'finishTime',
+      type: 'number'
+    },
+    {
+      name: 'delay',//queue delay
+      type: 'number'
+    },
+    {
+      name: 'systemDelay',
+      type: 'number'
+    },
+    {
+      name: 'enqueueTime',
+      type: 'number'
+    }
   ]
 });

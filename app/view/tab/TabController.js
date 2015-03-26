@@ -20,8 +20,8 @@ Ext.define('bo.view.tab.TabController', {
     var tasks = this.getViewModel().get('tasks');
     var selected = grid.getSelection()[0];
     if (selected == null)selected = tasks.last();
-    var time = selected ? selected.get('time') : 0;
-    tasks.add({time: time, size: 1});
+    var interval = selected ? selected.get('interval') : 0;
+    tasks.add({interval: interval, size: 1});
   },
   removeRow: function () {
     var tasks = this.getViewModel().get('tasks');
@@ -38,6 +38,12 @@ Ext.define('bo.view.tab.TabController', {
       datachanged: this.updateChart,
       add: this.assignColor
     });
+
+
+    tasks.each(function (rec) {
+      rec.data.color = this.createColor();
+    }, this)
+
     this.getView().setTitle('Sesja ' + ++this.self.cnt);
 
     var plain = this.getPlain();
@@ -90,14 +96,17 @@ Ext.define('bo.view.tab.TabController', {
       },
       cores: coreList.getCores()
     });
+    var time = 0, t;
     var producer = Ext.create('bo.sim.TaskProducer', {
       processor: processor,
       taskDefaults: {
         partSize: coreList.getDelta(),
       },
       tasks: Ext.Array.map(tasks.getRange(), function (rec) {
+
+        time += rec.get('interval');
         return {
-          enqueueTime: rec.get('time'),
+          enqueueTime: time,
           size: rec.get('size'),
           color: rec.get('color')
         }
@@ -118,7 +127,9 @@ Ext.define('bo.view.tab.TabController', {
       taskModel.set({
         startTime: st,
         finishTime: ft,
-        delay: isNaN(ft) ? null : st - task.getEnqueueTime()
+        enqueueTime: task.getEnqueueTime(),
+        delay: isNaN(ft) ? null : st - task.getEnqueueTime(),
+        systemDelay: isNaN(ft) ? null : ft - task.getEnqueueTime(),
       }, {silent: true});
     }
     this.lookupReference('grid').getView().refresh();

@@ -43,7 +43,7 @@ Ext.define('bo.view.main.MainController', {
     tabs.setActiveItem(newTab);
   },
   onPasteClickButton: function () {
-    Ext.Msg.prompt("Wklej wartości", "W każdym wierszu podaj dwie wartości: czas przybycia i wielkość zadania", function (button, value) {
+    Ext.Msg.prompt("Wklej wartości", "W każdym wierszu podaj dwie wartości: interwał i wielkość zadania", function (button, value) {
           if (button == 'ok') {
             var tabs = this.lookupReference('tabs');
             var newTab = tabs.add({

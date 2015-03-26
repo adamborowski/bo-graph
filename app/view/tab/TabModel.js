@@ -11,12 +11,12 @@ Ext.define('bo.view.tab.TabModel', {
   },
   stores: {
     tasks: {
-      sorters: [
-        {
-          property: 'time',
-          direction: 'ASC'
-        }
-      ],
+      //sorters: [
+      //  {
+      //    property: 'time',
+      //    direction: 'ASC'
+      //  }
+      //],
       model: 'bo.model.Task'
     },
     numTasks: {

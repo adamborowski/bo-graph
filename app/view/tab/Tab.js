@@ -30,7 +30,8 @@ Ext.define('bo.view.tab.Tab', {
         align: 'stretch',
         pack: 'stretch'
       },
-      width: 330,
+      width: 420,
+      split:true,
       title: 'zgłoszenia',
       collapsible: true,
       collapsed: false,
@@ -56,7 +57,11 @@ Ext.define('bo.view.tab.Tab', {
             mode: 'MULTI'
           },
           viewConfig: {
-            markDirty: false
+            markDirty: false,
+            plugins: {
+              ptype: 'gridviewdragdrop',
+              dragText: 'Zmień kolejność zgłoszeń'
+            }
           },
           bind: {
             store: '{tasks}'
@@ -69,12 +74,16 @@ Ext.define('bo.view.tab.Tab', {
           columns: {
             defaults: {
               sortable: false,
-              menuDisabled: true
+              //menuDisabled: true
             },
             items: [
               {
                 text: 'n',
-                xtype: 'rownumberer'
+                width: 52,
+                hidden: true,
+                renderer: function (val, meta, record, rowIdx) {
+                  return rowIdx + 1;
+                }
               },
               {
                 dataIndex: 'color',
@@ -86,11 +95,7 @@ Ext.define('bo.view.tab.Tab', {
               {
                 text: 'a<sub>n</sub>',
                 xtype: 'numbercolumn',
-                dataIndex: 'time',
-                renderer: function (value, meta, record, rowIndex, colIndex, store) {
-                  if (rowIndex == 0)return value;
-                  return value - store.getAt(rowIndex - 1).data.time;
-                },
+                dataIndex: 'interval',
                 flex: 1,
                 editor: {
                   xtype: 'numberfield',
@@ -108,10 +113,19 @@ Ext.define('bo.view.tab.Tab', {
                 }
               },
               {
+                text: 't<sup>+</sup><sub>n</sub>',
+                xtype: 'numbercolumn',
+                flex: 1.3,
+                dataIndex: 'enqueueTime',
+                editor: false,
+                tdCls: 'a-cell-readonly',
+                emptyCellText: '-'
+              },
+              {
                 text: 't*<sub>n</sub>',
                 dataIndex: 'startTime',
                 xtype: 'numbercolumn',
-                flex: 1,
+                flex: 1.3,
                 editor: false,
                 tdCls: 'a-cell-readonly',
                 emptyCellText: '-'
@@ -120,7 +134,16 @@ Ext.define('bo.view.tab.Tab', {
                 text: 't<sup>-</sup><sub>n</sub>',
                 dataIndex: 'finishTime',
                 xtype: 'numbercolumn',
+                flex: 1.3,
+                editor: false,
+                tdCls: 'a-cell-readonly',
+                emptyCellText: '-'
+              },
+              {
+                text: 'd<sub>n</sub>',
+                xtype: 'numbercolumn',
                 flex: 1,
+                dataIndex: 'systemDelay',
                 editor: false,
                 tdCls: 'a-cell-readonly',
                 emptyCellText: '-'

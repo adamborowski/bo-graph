@@ -9,7 +9,8 @@ Ext.define('bo.view.main.Main', {
   extend: 'Ext.panel.Panel',
   requires: [
     'bo.view.main.MainController',
-    'bo.view.main.MainModel'
+    'bo.view.main.MainModel',
+    'Ext.ux.TabReorderer'
   ],
 
   xtype: 'app-main',
@@ -54,7 +55,7 @@ Ext.define('bo.view.main.Main', {
             },
             {
               text: 'Generuj strumień zgłoszeń',
-              handler:'onGenerator'
+              handler: 'onGenerator'
             },
             '-',
             {

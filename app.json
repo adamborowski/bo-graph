@@ -97,15 +97,15 @@
    */
   "js": [
     {
-      "path": "lib/random.js",
-      "includeInBundle": true
-    },
-    {
-      "path": "lib/dygraphs/dist/dygraph-combined-dev.js",
-      "includeInBundle": true
+      "path": "lib/dygraphs/dist/dygraph-combined.js",
+      "includeInBundle": false
     },
     {
       "path": "lib/dygraphs/src/extras/synchronizer.js",
+      "includeInBundle": true
+    },
+    {
+      "path": "lib/random.js",
       "includeInBundle": true
     },
     {

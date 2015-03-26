@@ -25,7 +25,7 @@ Ext.define('bo.generator.Config', {
           minValue: 1,
           fieldLabel: 'populacja',
           itemId: 'population',
-          value: 20000
+          value: 10000
         },
         {
           xtype: 'numberfield',

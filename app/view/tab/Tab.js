@@ -87,7 +87,7 @@ Ext.define('bo.view.tab.Tab', {
                 text: 'a<sub>n</sub>',
                 xtype: 'numbercolumn',
                 dataIndex: 'time',
-                renderer: function (value, meta, record, rowIndex,colIndex, store) {
+                renderer: function (value, meta, record, rowIndex, colIndex, store) {
                   if (rowIndex == 0)return value;
                   return value - store.getAt(rowIndex - 1).data.time;
                 },
@@ -160,159 +160,53 @@ Ext.define('bo.view.tab.Tab', {
         {
           xtype: 'corevis',
           reference: 'corevis',
-          flex: 0.7
+          flex: 0.7,
+          hidden: true//todo show it
         },
         {
-          xtype: 'cartesian',
-          interactions:'crosszoom',
-          animation: USE_CHART_ANIMATION,
-          reference: 'chart',
+          xtype: 'dygraph',
+          reference: 'ut_dygraph',
+          flex: 0.7,
+          options: {
+            labels: ['t[s]', 'U(t)'],
+            ylabel: 'U(t)',
+            xlabel: 't[s]',
+            showRangeSelector: true,
+            rangeSelectorHeight: 30,
+            fillGraph: true,
+            color: '#74ae0a',
+            fillAlpha: 1,
+          }
+        },
+        {
+          xtype: 'dygraph',
+          reference: 'nt_dygraph',
           flex: 1,
-          axes: [{
-            type: 'numeric',
-            fields: 'unfinished',
-            position: 'left',
-            grid: true,
-            title: 'U(t)'
-          }, {
-            type: 'numeric',
-            fields: 'time',
-            position: 'bottom',
-            grid: true,
-            title: 't[s]'
-          }],
-          series: [{
-            type: 'area',
-            xField: 'time',
-            yField: 'unfinished',
-            style: {
-              lineWidth: 0
-            },
-            marker: {
-              radius: 2,
-              lineWidth: 4
-            },
-            highlight: {
-              fillStyle: '#fff',
-              radius: 5,
-              lineWidth: 2,
-              strokeStyle: '#000'
-            },
-            tooltip: {
-              trackMouse: true,
-              style: 'background: #fff',
-              showDelay: 0,
-              dismissDelay: 0,
-              hideDelay: 0,
-              renderer: function (rec, item) {
-                this.setHtml(Ext.String.format('U({0})={1}', rec.get('time'), rec.get('unfinished')));
-              }
-            }
-          }]
+          options: {
+            labels: ['t[s]', 'N(t)'],
+            ylabel: 'N(t)',
+            xlabel: 't[s]',
+            showRangeSelector: true,
+            rangeSelectorHeight: 30,
+            fillGraph: true,
+            fillAlpha: 1,
+            color: '#3D4542'
+          }
         },
         {
-          xtype: 'cartesian',
-          animation: USE_CHART_ANIMATION,
-          reference: 'chart_n_t',
-          flex: 0.5,
-          axes: [{
-            type: 'numeric',
-            fields: 'numTasks',
-            position: 'left',
-            grid: true,
-            title: 'N(t)'
-          }, {
-            type: 'numeric',
-            fields: 'time',
-            position: 'bottom',
-            grid: true,
-            title: 't[s]'
-          }],
-          series: [{
-            type: 'area',
-            xField: 'time',
-            yField: 'numTasks',
-            style: {
-              lineWidth: 0,
-              fillStyle: '#3d4542'
-            },
-            highlight: {
-              fillStyle: '#fff',
-              radius: 5,
-              lineWidth: 2,
-              strokeStyle: '#000'
-            },
-            tooltip: {
-              trackMouse: true,
-              style: 'background: #fff',
-              showDelay: 0,
-              dismissDelay: 0,
-              hideDelay: 0,
-              renderer: function (rec, item) {
-                this.setHtml(Ext.String.format('N({0})={1}', rec.get('time'), rec.get('numTasks')));
-              }
-            }
-          }]
-        },
-        {
-          xtype: 'cartesian',
-          animation: USE_CHART_ANIMATION,
-          reference: 'chart_failed',
-          flex: 0.4,
-          axes: [{
-            type: 'numeric',
-            fields: 'numFailed',
-            position: 'left',
-            minimum: 0,
-            grid: true,
-            title: 'R(t)'
-          }, {
-            type: 'numeric',
-            fields: 'time',
-            minimum: 0,
-            position: 'bottom',
-            grid: true,
-            title: 't[s]'
-          }],
-          series: [{
-            type: 'area',
-            xField: 'time',
-            yField: 'numFailed',
-            style: {
-              lineWidth: 0,
-              fillStyle: '#ce3553',
-              strokeStyle: '#ca3355',
-              maxBarWidth: 20
-            },
-            highlight: {
-              fillStyle: '#ca3355',
-              lineWidth: 2,
-              strokeStyle: '#000'
-            },
-            marker: {
-              radius: 2,
-              lineWidth: 4,
-              strokeStyle: '#8B263F'
-            },
-            tooltip: {
-              trackMouse: true,
-              style: 'background: #fff',
-              showDelay: 0,
-              dismissDelay: 0,
-              hideDelay: 0,
-              renderer: function (rec, item) {
-                var failedTasks = rec.get('failedTasks');
-                var str = "";
-                if (failedTasks.length) {
-                  str = "<br/>Odrzucone: ";
-                  for (var i = 0; i < failedTasks.length; i++) {
-                    str += 't<sub>' + (failedTasks[i].getOrder() + 1) + '</sub> ';
-                  }
-                }
-                this.setHtml(Ext.String.format('R({0})={1}', rec.get('time'), rec.get('numFailed')) + str);
-              }
-            }
-          }]
+          xtype: 'dygraph',
+          reference: 'rt_dygraph',
+          flex: 1,
+          options: {
+            labels: ['t[s]', 'R(t)'],
+            ylabel: 'R(t)',
+            xlabel: 't[s]',
+            showRangeSelector: true,
+            rangeSelectorHeight: 30,
+            fillGraph: true,
+            fillAlpha: 1,
+            color: '#a34152'
+          }
         }
       ]
     }

@@ -1,7 +1,7 @@
 Ext.define('bo.generator.Generator', {
   config: {
     population: 100,
-    minA: 0,
+    minA: 0.01,
     minB: 0.01,
     aRandom: 'normal',
     bRandom: 'normal',

@@ -101,6 +101,14 @@
       "includeInBundle": true
     },
     {
+      "path": "lib/dygraphs/dist/dygraph-combined-dev.js",
+      "includeInBundle": true
+    },
+    {
+      "path": "lib/dygraphs/src/extras/synchronizer.js",
+      "includeInBundle": true
+    },
+    {
       "path": "${framework.dir}/build/ext-all-rtl-debug.js"
     },
     {

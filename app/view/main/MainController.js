@@ -25,7 +25,7 @@ Ext.define('bo.view.main.MainController', {
     tabs.setActiveItem(newTab);
 
 
-    this.onGenerator();
+    //this.onGenerator();
 
   },
   addTab: function (tab) {
@@ -66,7 +66,7 @@ Ext.define('bo.view.main.MainController', {
     }
   },
   onAboutClick: function () {
-    Ext.Msg.alert('O programie', "Narzędzie do analizy procesów kolekowych.<br/>\nWykonano w celach edukacyjnych.<br/>\n<p>Wykorzystane biblioteki\n<ul>\n    <li>ExtJS 5 <a href=\"http://dev.sencha.com/ext/5.0.0/\" target=\"blank\">sencha.com</a></li>\n    <li>SimJS <a href=\"http://simjs.com/random.html\" target=\"blank\">simjs.com</a></li>\n</ul>\n</p>\n<h4>&copy; 2015 Adam Borowski</h4>");
+    Ext.Msg.alert('O programie', "Narzędzie do analizy procesów kolekowych.<br/>\nWykonano w celach edukacyjnych.<br/>\n<p>Wykorzystane biblioteki\n<ul>\n    <li>ExtJS 5 <a href=\"http://dev.sencha.com/ext/5.0.0/\" target=\"blank\">sencha.com</a></li>\n    <li>SimJS <a href=\"http://simjs.com/random.html\" target=\"blank\">simjs.com</a></li>\n    <li>Dygraphs <a href=\"http://dygraphs.com/\">dygraphs.com</a></li>\n</ul>\n</p>\n<h4>&copy; 2015 Adam Borowski</h4>");
   },
   onGenerator: function () {
     var w = Ext.widget('generator', {});

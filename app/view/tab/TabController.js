@@ -10,7 +10,7 @@ Ext.define('bo.view.tab.TabController', {
   alias: 'controller.tab',
   config: {
     plain: null,
-    data:null
+    data: null
   },
   statics: {
     cnt: 0
@@ -30,9 +30,6 @@ Ext.define('bo.view.tab.TabController', {
     tasks.remove(selected);
   },
   init: function () {
-    this.lookupReference('chart').setStore(this.getViewModel().get('unfinished'));
-    this.lookupReference('chart_n_t').setStore(this.getViewModel().get('numTasks'));
-    this.lookupReference('chart_failed').setStore(this.getViewModel().get('numFailed'));
     this.lookupReference('coreList').getController().on('coreupdate', this.updateChart, this);
     var tasks = this.getViewModel().get('tasks');
     tasks.on({
@@ -127,10 +124,24 @@ Ext.define('bo.view.tab.TabController', {
     this.lookupReference('grid').getView().refresh();
 
     ///
-    this.getViewModel().get('unfinished').setData(processor.getOutput().getTimelineForProperty('unfinished'));
-    this.getViewModel().get('numTasks').setData(processor.getOutput().getTimelineForProperty('numTasks'));
-    this.getViewModel().get('numFailed').setData(producer.failedTasks);
-    this.lookupReference('chart_failed').getAxis(1).setMaximum(this.lookupReference('chart').getAxis(1).getMaximum());
-
+    var ut = this.lookupReference('ut_dygraph');
+    ut.setChartData(bo.helper.Array.internalObjectToArray(processor.getOutput().getTimelineForProperty('unfinished'), ['time', 'unfinished']));
+    var nt = this.lookupReference('nt_dygraph');
+    nt.setChartData(bo.helper.Array.internalObjectToArray(processor.getOutput().getTimelineForProperty('numTasks'), ['time', 'numTasks']));
+    var rt = this.lookupReference('rt_dygraph');
+    rt.setChartData(bo.helper.Array.internalObjectToArray(producer.failedTasks, ['time', 'numFailed']));
+    if (this.dysync) {
+      try {
+        this.dysync.detach();
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    Ext.defer(function () {
+      this.dysync = Dygraph.synchronize([ut.g, nt.g, rt.g], {
+        range: false,
+        selection: false
+      });
+    }, 1, this);
   }
 });

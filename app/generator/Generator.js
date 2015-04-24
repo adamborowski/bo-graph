@@ -30,11 +30,14 @@ Ext.define('bo.generator.Generator', {
     var data = [];
     var time = 0;
     var a, b;
+    var sumA = 0, sumB = 0;
     for (var i = 0; i < numIter; i++) {
       a = ar.generateValue();
       b = br.generateValue();
       if (a < minA)a = minA;
       if (b < minB)b = minB;
+      sumA += a;
+      sumB += b;
       data.push({
         time: time,
         size: b,
@@ -42,6 +45,9 @@ Ext.define('bo.generator.Generator', {
       });
       time += a;
     }
+    data.meanA = sumA / numIter;
+    data.meanB = sumB / numIter;
+    data.meanNeeds = data.meanB / data.meanA;
     return data;
   }
 });

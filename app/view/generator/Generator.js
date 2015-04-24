@@ -1,5 +1,6 @@
 Ext.define('bo.view.generator.Generator', {
   xtype: 'generator',
+  cls: 'a-generator',
   extend: 'Ext.window.Window',
   controller: {
     type: 'generator'
@@ -34,6 +35,11 @@ Ext.define('bo.view.generator.Generator', {
       xtype: 'generator.summary',
       itemId: 'summary',
       fbar: [
+        {
+          itemId: 'summaryLabel',
+          xtype: 'label',
+          tpl: "<span class=\"span-box-a\">a<sub>śr</sub> {a:number(\'#.###\')}</span>\n<span class=\"span-box-b\">b<sub>śr</sub> {b:number(\'#.###\')}</span>\n<span class=\"span-box-needs\">zapotrzebowanie<sub>śr</sub>  {needs:number(\'#.###\')}</span>"
+        },
         '->',
         {
           text: 'Twórz sesję',

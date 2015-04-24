@@ -24,8 +24,9 @@ Ext.define('bo.view.main.MainController', {
     });
     tabs.setActiveItem(newTab);
 
-
-    //this.onGenerator();
+    //<debug>
+    this.onGenerator();
+    //</debug>
 
   },
   addTab: function (tab) {

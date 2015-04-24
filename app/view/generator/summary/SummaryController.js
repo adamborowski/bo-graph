@@ -8,9 +8,10 @@ Ext.define('bo.view.generator.summary.SummaryController', {
     this.initConfig(config);
     this.callParent(arguments);
   },
-  doSummary: function (aStore, bStore) {
+  doSummary: function (aStore, bStore, means) {
     this.setStore(aStore);
     this.lookupReference('aChart').setStore(aStore);
     this.lookupReference('bChart').setStore(bStore);
+    this.fireEvent('summarychange', aStore, bStore, means);
   }
 });

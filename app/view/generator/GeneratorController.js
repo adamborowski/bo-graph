@@ -1,6 +1,16 @@
 Ext.define('bo.view.generator.GeneratorController', {
   extend: 'Ext.app.ViewController',
   alias: 'controller.generator',
+  listen: {
+    controller: {
+      'generator.summary': {
+        summarychange: function (aStore, bStore, means) {
+          console.log("means:", means);
+          this.getView().down('#summaryLabel').setData(means);
+        }
+      }
+    }
+  },
   init: function () {
     this.getView().down('#openSessionButton').on('click', this.onOpenSession, this);
   },
@@ -28,7 +38,12 @@ Ext.define('bo.view.generator.GeneratorController', {
       fields: ['count', 'from', 'propability'],
       data: bBins
     });
-    this.getView().down('#summary').getController().doSummary(aStore, bStore);
+    var means = {
+      a: rows.meanA,
+      b: rows.meanB,
+      needs: rows.meanNeeds
+    };
+    this.getView().down('#summary').getController().doSummary(aStore, bStore, means);
     this.currentRows = rows;
   },
   onOpenSession: function () {

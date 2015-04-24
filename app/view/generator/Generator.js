@@ -38,7 +38,7 @@ Ext.define('bo.view.generator.Generator', {
         {
           itemId: 'summaryLabel',
           xtype: 'label',
-          tpl: "<span class=\"span-box-a\">a<sub>śr</sub> = {a:number(\'#.###\')}</span>\n<span class=\"span-box-b\">b<sub>śr</sub> = {b:number(\'#.###\')}</span>\n<span class=\"span-box-needs\">z<sub>śr</sub> = {needs:number(\'#.###\')}</span>"
+          tpl: "<span class=\"span-box-a\">a<sub>śr</sub> = <b>{a:number(\'#.###\')}</b></span>\n<span class=\"span-box-b\">b<sub>śr</sub> = <b>{b:number(\'#.###\')}</b></span>\n<span class=\"span-box-needs\">średnie zapotrzebowanie = b<sub>śr</sub> / a<sub>śr</sub> = <b>{needs:number(\'#.###\')}</b></span>"
         },
         '->',
         {

@@ -59,6 +59,10 @@ Ext.define('bo.view.main.Main', {
             },
             '-',
             {
+              text: 'Pomoc',
+              handler: 'onHelpClick'
+            },
+            {
               text: 'O programie',
               handler: 'onAboutClick'
             }

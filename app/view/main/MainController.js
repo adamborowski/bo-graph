@@ -24,8 +24,22 @@ Ext.define('bo.view.main.MainController', {
     });
     tabs.setActiveItem(newTab);
 
+
     //<debug>
-    this.onGenerator();
+    //this.onGenerator();
+    this.onHelpClick();
+
+
+    window.x = function () {
+      var el = Ext.fly(Ext.DomQuery.select('head>[href*=bootstrap.css]')[0]);
+      el.set({
+        href: null
+      });
+      el.set({
+        href: 'bootstrap.css?rand=' + new Date().getTime()
+      });
+
+    };
     //</debug>
 
   },
@@ -68,6 +82,9 @@ Ext.define('bo.view.main.MainController', {
   },
   onAboutClick: function () {
     Ext.Msg.alert('O programie', "Narzędzie do analizy procesów kolekowych.<br/>\nWykonano w celach edukacyjnych.<br/>\n<p>Wykorzystane biblioteki\n<ul>\n    <li>ExtJS 5 <a href=\"http://dev.sencha.com/ext/5.0.0/\" target=\"blank\">sencha.com</a></li>\n    <li>SimJS <a href=\"http://simjs.com/random.html\" target=\"blank\">simjs.com</a></li>\n    <li>Dygraphs <a href=\"http://dygraphs.com/\">dygraphs.com</a></li>\n</ul>\n</p>\n<h4>&copy; 2015 Adam Borowski</h4>");
+  },
+  onHelpClick: function () {
+    Ext.widget('helpwindow').show();
   },
   onGenerator: function () {
     var w = Ext.widget('generator', {});

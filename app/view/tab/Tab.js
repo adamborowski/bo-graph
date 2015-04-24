@@ -216,6 +216,7 @@ Ext.define('bo.view.tab.Tab', {
             fillGraph: true,
             color: '#74ae0a',
             fillAlpha: 1,
+            interactionModel: Dygraph.Interaction.defaultModel
           }
         },
         {
@@ -230,7 +231,8 @@ Ext.define('bo.view.tab.Tab', {
             rangeSelectorHeight: 30,
             fillGraph: true,
             fillAlpha: 1,
-            color: '#3D4542'
+            color: '#3D4542',
+            interactionModel: Dygraph.Interaction.defaultModel
           }
         },
         {
@@ -245,7 +247,8 @@ Ext.define('bo.view.tab.Tab', {
             rangeSelectorHeight: 30,
             fillGraph: true,
             fillAlpha: 1,
-            color: '#a34152'
+            color: '#a34152',
+            interactionModel: Dygraph.Interaction.defaultModel
           }
         }
       ]

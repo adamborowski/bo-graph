@@ -1,0 +1,70 @@
+.a-help-window {
+  .a-label {
+    display: block;
+    .on-left {
+      float: left;
+    }
+    .on-right {
+      float: right
+    }
+    .clear {
+      clear: both;
+    }
+    figure {
+      $border: #772222;
+      border: 1px solid $border;
+      background: #B53373;
+      padding: 6px;
+      img {
+        border: 1px solid white;
+      }
+      figcaption {
+        color: #ffffff;
+        padding: 1px;
+        font-weight: bold;
+        width: 100%;
+      }
+      margin: 0;
+      $mm: 10px;
+      margin-bottom: $mm;
+
+      &.on-right {
+        margin-left: $mm;
+      }
+      &:not(.on-right) {
+        margin-right: $mm;
+      }
+
+      &.caption-center {
+        figcaption {
+          text-align: center;
+        }
+      }
+      &.caption-right {
+        figcaption {
+          text-align: right;
+        }
+      }
+      &.caption-left {
+        figcaption {
+          text-align: left;
+        }
+      }
+    }
+    h1, h2, h3, h4 {
+      clear: both; //nagłówki nie pozwalają na ciągnięcie się floatu
+    }
+    p {
+      text-align: justify;
+    }
+    h2 {
+      border-bottom: 1px solid #dadada;
+      padding-bottom: 10px;
+      display: block;
+    }
+    ul {
+      list-style-position: inside
+    }
+  }
+
+}

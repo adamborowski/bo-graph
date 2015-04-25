@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1383716a-f2de-4434-9450-f293e87064df" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/help/Help.js" afterPath="$PROJECT_DIR$/app/view/help/Help.js" />
-    </list>
+    <list default="true" id="1383716a-f2de-4434-9450-f293e87064df" name="Default" comment="" />
     <ignored path="bo_graph.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

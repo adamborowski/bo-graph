@@ -12,6 +12,7 @@ Ext.define('bo.Application', {
   name: 'bo',
 
   stores: [
+    "LocalStore"
     // TODO: add global / shared stores here
   ],
 

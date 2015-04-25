@@ -27,7 +27,6 @@ Ext.define('bo.view.main.MainController', {
 
     //<debug>
     //this.onGenerator();
-    this.onHelpClick();
 
 
     window.x = function () {
@@ -42,6 +41,16 @@ Ext.define('bo.view.main.MainController', {
     };
     //</debug>
 
+
+    var store = bo.app.getStore('LocalStore');
+    store.load();
+    var s = store.findRecord("key", "doNotShowHelpAtStartup");
+    if (s && s.get('value') == true) {
+      //nie pokazuj okna
+    }
+    else {
+      this.onHelpClick();
+    }
   },
   addTab: function (tab) {
     var tabs = this.lookupReference('tabs');
